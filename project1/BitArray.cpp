@@ -29,6 +29,27 @@ BitArray::BitArray(intmax_t size) {
 
 BitArray::BitArray(const std::string & value) {
     // TODO
+    if (value.empty()){
+        valid = false;
+        arrSize =0;
+        arr = nullptr;
+        return;
+    }
+    arrSize = value.size();
+    arr = new int[arrSize];
+    valid = true;
+
+    for (intmax_t i =0; i <arrSize; i++){
+        if (value[i] == '0') arr[i] = 0;
+        else if (value[i] == '1') arr[i] = 1;
+        else{
+            valid = false;
+            delete[] arr;
+            arr = nullptr;
+            arrSize = 0;
+            return;
+        }
+    }
 }
 
 BitArray::~BitArray() {
@@ -69,9 +90,8 @@ bool BitArray::test(intmax_t index) {
 //asString method
 std::string BitArray::asString() const {
     std::string strArray = "";
-    for (intmax_t i = arrSize - 1; i >= 0; i--){
+    for (intmax_t i = 0; i < arrSize; i++){
         strArray += (arr[i] ? '1' : '0');
-        if (i == 0) break;
     }
     return strArray;
 }
