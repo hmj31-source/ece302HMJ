@@ -21,6 +21,7 @@ BitArray::BitArray(intmax_t size) {
         return;
     }
     arrSize = size;
+    valid = true;
     arr = new int[size];
     for (intmax_t i = 0; i < arrSize; i++){
         arr[i] = 0;
