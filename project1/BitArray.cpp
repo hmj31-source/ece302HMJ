@@ -79,17 +79,31 @@ void BitArray::set(intmax_t index){
 
 //reset method
 void BitArray::reset(intmax_t index) {
-
+    if (index >= arrSize || index <0 ){
+        valid = false;
+        return;
+    }
+    arr[index] = 0;
 }
 
 //toggle method
 void BitArray::toggle(intmax_t index) {
-
+    if (index >= arrSize || index <0 ){
+        valid = false;
+        return;
+    }
+    if (arr[index] == 0) arr[index] = 1;
+    else if (arr[index] == 1) arr[index] = 0;
 }
 
 //test method
 bool BitArray::test(intmax_t index) {
-    return false;
+    if (index >= arrSize || index <0 ){
+        valid = false;
+        return false;
+    }
+    if (arr[index] ==1) return true;
+    else return false;
 }
 
 //asString method
