@@ -36,8 +36,9 @@ public:
 private:
 
   // TODO
-  int arrSize;
+  intmax_t arrSize;
   bool valid;
+  int* arr;
 };
 
 #endif

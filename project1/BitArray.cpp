@@ -3,16 +3,26 @@
 BitArray::BitArray() {
     // TODO
     //set arrSizr to 8
-    this->arrSize = 8;
-    this->valid = true;
+    arrSize = 8;
+    valid = true;
     //Declare an 8 bit array with all bits set to 0
-    int arr[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+    arr = new int[arrSize];
+    for (intmax_t i =0; i < arrSize; i++){
+        arr[i] = 0;
+    }
 }
 
 BitArray::BitArray(intmax_t size) {
     // TODO
-    int arr[size];
-    for (int i; i < size; i++){
+    if (size <= 0){
+        arrSize = 0;
+        valid = false;
+        arr = nullptr;
+        return;
+    }
+    arrSize = size;
+    arr = new int[size];
+    for (intmax_t i = 0; i < arrSize; i++){
         arr[i] = 0;
     }
 }
@@ -58,7 +68,12 @@ bool BitArray::test(intmax_t index) {
 
 //asString method
 std::string BitArray::asString() const {
-    return "";
+    std::string strArray = "";
+    for (intmax_t i = arrSize - 1; i >= 0; i--){
+        strArray += (arr[i] ? '1' : '0');
+        if (i == 0) break;
+    }
+    return strArray;
 }
 
 
