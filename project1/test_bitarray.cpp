@@ -67,9 +67,17 @@ TEST_CASE( "Bitarray: Test toggle", "[bitarray]" ) {
     REQUIRE(b.good());
     REQUIRE(b.asString() == "010101");
 }
-/*
-TEST_CASE( "Bitarray: Test test", "[bitarray]" ) {
 
+TEST_CASE( "Bitarray: Test test", "[bitarray]" ) {
+    std::string send("101010");
+    BitArray b(send);
+    REQUIRE(b.size() == 6);
+    REQUIRE(b.good());
+    REQUIRE(b.test(0) == false);
+    REQUIRE(b.test(1) == true);
+    REQUIRE(b.test(2) == false);
+    REQUIRE(b.test(3) == true);
+    REQUIRE(b.test(4) == false);
+    REQUIRE(b.test(5) == true);
 
 }
-*/
