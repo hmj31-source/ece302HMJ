@@ -36,6 +36,8 @@ public:
 private:
 
   // TODO
+  int arrSize;
+  bool valid;
 };
 
 #endif

@@ -2,12 +2,19 @@
 
 BitArray::BitArray() {
     // TODO
+    //set arrSizr to 8
+    this->arrSize = 8;
+    this->valid = true;
     //Declare an 8 bit array with all bits set to 0
     int arr[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 }
 
 BitArray::BitArray(intmax_t size) {
     // TODO
+    int arr[size];
+    for (int i; i < size; i++){
+        arr[i] = 0;
+    }
 }
 
 BitArray::BitArray(const std::string & value) {
@@ -21,12 +28,12 @@ BitArray::~BitArray() {
 // TODO: other methods
 // size method
 intmax_t BitArray::size() const{
-    return 0;
+    return this->arrSize;
 }
 
 //good mehtod
 bool BitArray::good() const {
-    return false;
+    return this->valid;
 }
 
 //set method
