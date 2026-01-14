@@ -45,3 +45,31 @@ TEST_CASE( "Bitarray: Test set", "[bitarray]" ) {
 
 
 /* Your test cases here */
+
+TEST_CASE( "Bitarray: Test reset", "[bitarray]" ) {
+    std::string send("101010");
+    BitArray b(send);
+    b.reset(1);
+    b.reset(3);
+    b.reset(5);
+    REQUIRE(b.size() == 6);
+    REQUIRE(b.good());
+    REQUIRE(b.asString() == "000000");
+}
+
+TEST_CASE( "Bitarray: Test toggle", "[bitarray]" ) {
+    std::string send("101010");
+    BitArray b(send);
+    for ( int i =0; i < 6; i++){
+        b.toggle(i);
+    }
+    REQUIRE(b.size() == 6);
+    REQUIRE(b.good());
+    REQUIRE(b.asString() == "010101");
+}
+/*
+TEST_CASE( "Bitarray: Test test", "[bitarray]" ) {
+
+
+}
+*/
