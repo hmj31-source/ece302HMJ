@@ -39,9 +39,9 @@ BitArray::BitArray(const std::string & value) {
     arr = new int[arrSize];
     valid = true;
 
-    for (intmax_t i =0; i <arrSize; i++){
-        if (value[i] == '0') arr[i] = 0;
-        else if (value[i] == '1') arr[i] = 1;
+    for (intmax_t i = 0; i < arrSize; i++){
+        if (value[i] == '0') arr[arrSize-1 - i] = 0;
+        else if (value[i] == '1') arr[arrSize -1 -i] = 1;
         else{
             valid = false;
             delete[] arr;
@@ -54,6 +54,7 @@ BitArray::BitArray(const std::string & value) {
 
 BitArray::~BitArray() {
     // TODO
+    delete[] arr;
 }
 
 // TODO: other methods
@@ -69,7 +70,11 @@ bool BitArray::good() const {
 
 //set method
 void BitArray::set(intmax_t index){
-
+    if (index >= arrSize || index <0 ){
+        valid = false;
+        return;
+    }
+    arr[index] = 1;
 }
 
 //reset method
@@ -89,11 +94,13 @@ bool BitArray::test(intmax_t index) {
 
 //asString method
 std::string BitArray::asString() const {
-    std::string strArray = "";
-    for (intmax_t i = 0; i < arrSize; i++){
-        strArray += (arr[i] ? '1' : '0');
+    std::string s = "";
+    int max = arrSize - 1;
+    for (intmax_t i = arrSize - 1; i >= 0; --i){
+        s += (arr[i] ? '1' : '0');
+        if (i ==0) break;
     }
-    return strArray;
+    return s;
 }
 
 
