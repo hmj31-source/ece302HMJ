@@ -31,9 +31,6 @@ TEST_CASE("Test bool add", "[Add]"){
 
   Add<bool> a;
   REQUIRE(a.call(false, false)== false);
-  std::cout << "passed 1st case" << std::endl;
   REQUIRE(a.call(false, true)== true);
-  std::cout << "passed 2nd case" << std::endl;
   REQUIRE(a.call(true, true)== true);
-  std::cout << "passed 3rd case" << std::endl;
 }
