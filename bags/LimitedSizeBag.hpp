@@ -28,6 +28,7 @@ public:
   static const std::size_t maxsize = 100;
 
 private:
+  std::size_t size;
 
 };
 
