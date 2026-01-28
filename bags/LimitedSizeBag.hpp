@@ -30,6 +30,8 @@ public:
 private:
   std::size_t size;
 
+  std::size_t items[maxsize];
+
 };
 
 #include "LimitedSizeBag.tpp"

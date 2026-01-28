@@ -3,18 +3,16 @@
 template<typename T>
 LimitedSizeBag<T>::LimitedSizeBag() {
   //default constructor intialize to zero 
-  size_t arr[0];
   size = 0;
 }
   
 template<typename T>
 bool LimitedSizeBag<T>::add(const T& item)
 {
-  size_t currentSize = getCurrentSize() 
-  if(currentSize >= maxsize-1) return false;
+  if(size >= maxsize) return false;
 
   //add to array
-  arr[currentSize-1] = item;
+  items[size] = item;
   size++;
   return true;
 }
@@ -22,21 +20,21 @@ bool LimitedSizeBag<T>::add(const T& item)
 template<typename T>
 bool LimitedSizeBag<T>::remove(const T& item)
 {
-  size_t currentSize = getCurrentSize() 
-  if(currentSize <= maxsize-1) return false;
-
-  //remove from array
-  arr(currentSize -1) = 0;
-  size--;
-  return true;
+  for(std::size_t i = 0; i < size; i++) {
+  if(items[i] == item ){
+    items[i] = items[size -1];
+    items[size - 1] = T{};
+    size--;
+    return true;
+  }
+}
+return false;
 }
 
 template<typename T>
 bool LimitedSizeBag<T>::isEmpty() const
 {
-  size_t currentSize = getCurrentSize()
-  if(currentSize == 0) return true;
-  return false;
+  return size == 0;
 }
 
 template<typename T>
@@ -48,29 +46,24 @@ std::size_t LimitedSizeBag<T>::getCurrentSize() const
 template<typename T>
 bool LimitedSizeBag<T>::contains(const T& item) const
 {  
-  size_t currentSize = getCurrentSize();
-  for ( int i =0; i < currentSize-1: i++){
-    if (arr[i] == item) return true;
+  for (std::size_t i =0; i < size; i++){
+    if (items[i] == item) return true;
   }
   return false;
 }
 
 template<typename T>
 void LimitedSizeBag<T>::clear(){
-  size_t currentSize = getCurrentSize();
-  for (int i=0; i < currentSize-1; i++){
-    arr[i] = 0;
-  }
-  return;
+  for (std::size_t i=0; i < size; i++) items[i] = T{};
+  size = 0;
 }
 
 template<typename T>
 std::size_t LimitedSizeBag<T>::getFrequencyOf(const T & item) const
 {
-  size_t currentSize = getCurrentSize();
-  int count = 0;
-  for ( int i =0; i < currentSize-1; i++){
-    if (arr[i] == item) count++;
+  std::size_t count = 0;
+  for ( std::size_t i =0; i < size; i++){
+    if (items[i] == item) count++;
   }
   return count;
-};
+}

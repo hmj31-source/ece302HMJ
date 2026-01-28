@@ -15,3 +15,10 @@ TEST_CASE("Calling all public members", "[LimitedSizeBag]"){
   b.getFrequencyOf(0);
   b.contains(0);
 }
+
+TEST_CASE("defalut constructor", "[LimitedSizeBag]"){
+  LimitedSizeBag<int> bag;
+
+  REQUIRE(bag.getCurrentSize() == 0);
+
+}
