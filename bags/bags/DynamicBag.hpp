@@ -37,6 +37,10 @@ public:
   bool contains(const T& item) const;
 
 private:
+//size variable
+  std::size_t size;
+  //array variable
+  T* items; 
 
 };
 
