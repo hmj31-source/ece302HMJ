@@ -32,7 +32,7 @@ DynamicBag<T>::~DynamicBag(){
 template<typename T>
 DynamicBag<T>& DynamicBag<T>::operator=(DynamicBag<T> x)
 {  
-  std::swap(x);
+  swap(x);
   return *this;
 }
 
