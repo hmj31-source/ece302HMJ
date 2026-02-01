@@ -53,26 +53,40 @@ bool DynamicBag<T>::remove(const T& item)
 template<typename T>
 bool DynamicBag<T>::isEmpty() const
 {
+  if size
   return false;
 }
 
 template<typename T>
 std::size_t DynamicBag<T>::getCurrentSize() const
 {
-  return 0;
+  return size;
 }
 
 template<typename T>
 bool DynamicBag<T>::contains(const T& item) const
 {  
+  for (size_t i =0; i <= size; 1++){
+    if (items[i] == item){
+      return true;
+    }
+  }
   return false;
 }
 
 template<typename T>
-void DynamicBag<T>::clear(){}
+void DynamicBag<T>::clear(){
+  size = 0;
+}
 
 template<typename T>
 std::size_t DynamicBag<T>::getFrequencyOf(const T & item) const
 {
-  return 0;
+  size_t count =0;
+  for (size_t i =0; i<=size; i++){
+    if (items[i] == item){
+      count++;
+    }
+  }
+  return count;
 };
