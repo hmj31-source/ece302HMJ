@@ -56,7 +56,7 @@ bool DynamicBag<T>::add(const T& item)
     }
     delete[] items;
     items = newItems;
-    capcity = newcapacity;
+    capacity = newcapacity;
   }
 
   items[size++] = item;
