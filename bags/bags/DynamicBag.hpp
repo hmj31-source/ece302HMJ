@@ -39,6 +39,8 @@ public:
 private:
 //size variable
   std::size_t size;
+  //capacity variable
+  std::size_t capacity;
   //array variable
   T* items; 
 

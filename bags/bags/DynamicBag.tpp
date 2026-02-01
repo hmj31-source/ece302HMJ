@@ -2,14 +2,32 @@
 #include <utility>
 
 template<typename T>
-DynamicBag<T>::DynamicBag() {}
+DynamicBag<T>::DynamicBag() {
+  size = 0;
+  capacity = 0;
+  items = nullptr;
+}
   
 
 template<typename T>
-DynamicBag<T>::DynamicBag(const DynamicBag<T>& x){}
+DynamicBag<T>::DynamicBag(const DynamicBag<T>& x){
+  size = x.size;
+  capacity = x.capacity
+  if (capacity ==0){
+    items = nullptr;
+  }
+  else {
+    items = new T[size];
+    for (std::size_t i = 0; i < size; i++){
+      items[i] = x.items[i];
+    }
+  }
+}
     
 template<typename T>
-DynamicBag<T>::~DynamicBag(){}
+DynamicBag<T>::~DynamicBag(){
+  delete[] items;
+}
   
 template<typename T>
 DynamicBag<T>& DynamicBag<T>::operator=(DynamicBag<T> x)
