@@ -50,8 +50,8 @@ bool DynamicBag<T>::add(const T& item)
   if(size==capacity){
     std::size_t newcapacity = (capacity ==0) ? 1: capacity * 2;
 
-    T* newItems = new T[newCapacity];
-    for (std::size_t 1 = 0; i < size; i++){
+    T* newItems = new T[newcapacity];
+    for (std::size_t i = 0; i < size; i++){
       newItems[i] = items[i];
     }
     delete[] items;
