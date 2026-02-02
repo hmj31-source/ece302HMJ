@@ -93,7 +93,18 @@ bool FindPalindrome::add(const std::string & newWord)
 {
 	// TODO 
 	if (size==cap){
-		
+		int newCap = (cap ==0) ? 1:0; cap *2;
+
+		std::string* newWords = new std::string[newCap];
+		for (int i = 0; i <size; i++){
+			newWords[i] = words[i];
+		}
+		delete[] words;
+		words = newWords;
+		cap = newCap;
+
+		words[size++] = newWord;
+		return true;
 	}
 
 	return false;
