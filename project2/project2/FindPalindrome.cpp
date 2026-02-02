@@ -43,22 +43,37 @@ bool FindPalindrome::isPalindrome(std::string testString) const
 FindPalindrome::FindPalindrome()
 {
 	// TODO 
+	pal = new FindPalindrome();
+	cap = 0;
+	size = 0;
+	words = new std::string[cap];
+	numPalidromes = 0;
 }
 
 FindPalindrome::~FindPalindrome()
 {
 	// TODO 
+	delete[] pal;
+	delete[] words;
+	words = nullptr;
+	pal = nullptr;
 }
 
 int FindPalindrome::number() const
 {
 	// TODO 
-	return 0;
+	return numPalidromes;
 }
 
 void FindPalindrome::clear()
 {
 	// TODO 
+	delete[] words;
+	words = nullptr;
+	cap = 0;
+	size=0;
+	numPalidromes =0;
+
 }
 
 bool FindPalindrome::cutTest1(const std::vector<std::string> & wordVector)
@@ -77,6 +92,10 @@ bool FindPalindrome::cutTest2(const std::vector<std::string> & wordVector1,
 bool FindPalindrome::add(const std::string & newWord)
 {
 	// TODO 
+	if (size==cap){
+		
+	}
+
 	return false;
 }
 

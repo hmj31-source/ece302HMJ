@@ -8,7 +8,17 @@ class FindPalindrome{
 
 private:
 	/* Define additional private members here as needed */ 
-	
+	//number palidromes
+	int numPalidromes;
+	//palidrone object
+	FindPalindrome* pal;
+	//capacity for array
+	int cap;
+	//array of strings
+	std::string* words;
+	//int for size;
+	int size;
+
 
 	/** Find and test all possible combinations of the words that have been
 	 * added to the FindPalindrome instance. Must call itself recursively. 
