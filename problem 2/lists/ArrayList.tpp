@@ -4,12 +4,17 @@ template <typename T>
 ArrayList<T>::ArrayList()
 {
   // TODO
+  cap=0;
+  size=0;
+  list = nullptr;
 }
 
 template <typename T>
 ArrayList<T>::~ArrayList() 
 {
   // TODO
+  delete[] list;
+  list = nullptr;
 }
 
 template <typename T>
