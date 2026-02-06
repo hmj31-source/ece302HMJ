@@ -36,9 +36,9 @@ class ArrayList: public AbstractList<T>
   private:
 
     // TODO
-    size_t cap;
-    size_t num;
-    T* lsit[cap];
+    std::size_t cap;
+    std::size_t num;
+    T* lsit;
 };
 
 #include "ArrayList.tpp"
