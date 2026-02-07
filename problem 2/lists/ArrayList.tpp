@@ -4,7 +4,6 @@ template <typename T>
 ArrayList<T>::ArrayList()
 {
   // TODO
-  cap=0;
   size=0;
   list = nullptr;
 }
@@ -22,17 +21,11 @@ ArrayList<T>::ArrayList(const ArrayList &x)
 {
   // TODO
   size = x.size;
-  cap = x.cap;
+  list = (size > 0) ? new T[size] : nullptr;
 
-  if (cap ==0) list = nullptr;
-  else{
-    list = new T[cap];
-
-    for (std::size_t i = 0; i < size; ++i)
-      list[i] = x.list[i];
-  }
+  for (std::size_t i = 0; i < size; ++i)
+    list[i] = x.list[i];
 }
-
 template <typename T>
 ArrayList<T> &ArrayList<T>::operator=(ArrayList x)
 {
@@ -47,7 +40,6 @@ void ArrayList<T>::swap(ArrayList &x)
   // TODO
   std::swap(list, x.list);
   std::swap(size, x.size);
-  std::swap(cap, x.cap);
 }
 
 template <typename T>
