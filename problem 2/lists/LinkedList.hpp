@@ -38,10 +38,7 @@ class LinkedList: public AbstractList<T>
 
     //TODO
     std::size_t itemCount;
-    Node<T>* headPtr;
-
-
-  
+    Node<T>* headPtr;  
 };
 
 #include "LinkedList.tpp"

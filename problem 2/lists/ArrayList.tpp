@@ -68,27 +68,25 @@ std::size_t ArrayList<T>::getLength() const noexcept
 template <typename T>
 void ArrayList<T>::insert(std::size_t position, const T &item)
 {
-  // TODO
-  if (position < 1 || position > size + 1) throw std::out_of_range("insert position out of range");
-  if (size +1 > cap){
-    std::size_t newCap = (cap ==0) ? 1: cap*2;
-    while (newCap < size+1) newCap *=2;
+  if (position < 1 || position > size + 1)
+    throw std::out_of_range("insert out of range");
 
-    T* newArr = new T[newCap];
+  T* newArr = new T[size + 1];
+  std::size_t idx = position - 1;
 
-    //copy old
-    for (std::size_t i =0; i< size; ++i)
-      newArr[i] = std::move(list[i]);
-    delete[]list;
-    list = newArr;
-    cap = newCap;
-  }
+  // copy before idx
+  for (std::size_t i = 0; i < idx; ++i)
+  newArr[i] = list[i];
 
-  std::size_t idx = position -1;
-  for (std::size_t i = size; i > idx; --i)
-    list[i] = std::move(list[i-1]);
+  // place new item
+  newArr[idx] = item;
 
-  list[idx] = item;
+  // copy after idx (shift right by 1)
+  for (std::size_t i = idx; i < size; ++i)
+    newArr[i + 1] = list[i];
+
+  delete[] list;
+  list = newArr;
   ++size;
 }
 
@@ -96,13 +94,24 @@ template <typename T>
 void ArrayList<T>::remove(std::size_t position)
 {
   // TODO
-  if (position < 1 || position > size) throw std::out_of_range("remove position out of range");
+  if (position < 1 || position > size)
+    throw std::out_of_range("remove out of range");
 
-  std::size_t idx = position -1;
+  std::size_t idx = position - 1;
 
-  for (std::size_t i = idx; i + 1 < size; ++i)
-    list[i] = std::move(list[i+1]);
+  // new size will be size-1
+  T* newArr = (size > 1) ? new T[size - 1] : nullptr;
 
+  // copy before idx
+  for (std::size_t i = 0; i < idx; ++i)
+    newArr[i] = list[i];
+
+  // copy after idx (shift left by 1)
+  for (std::size_t i = idx + 1; i < size; ++i)
+    newArr[i - 1] = list[i];
+
+  delete[] list;
+  list = newArr;
   --size;
 }
 
@@ -113,7 +122,6 @@ void ArrayList<T>::clear()
   delete[] list;
   list = nullptr;
 
-  cap = 0;
   size = 0;
 }
 
