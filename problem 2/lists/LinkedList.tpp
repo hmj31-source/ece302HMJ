@@ -84,18 +84,16 @@ template <typename T>
 void LinkedList<T>::insert(std::size_t position, const T &item)
 {
   // TODO
-  if (position < 1 || position > itemCount +1) throw std::out_of_range("insert out of range");
+  if (position > itemCount) throw std::out_of_range("insert out of range");
 
   Node<T>* newNode = new Node<T>(item);
 
-  if (position == 1){
+  if (position == 0) {
     newNode->setNext(headPtr);
     headPtr = newNode;
-  }
-  else{
+  } else {
     Node<T>* prev = headPtr;
-
-    for (size_t i=1; i< position -1; ++i)
+    for (std::size_t i = 0; i < position - 1; ++i)
       prev = prev->getNext();
 
     newNode->setNext(prev->getNext());
@@ -108,25 +106,25 @@ template <typename T>
 void LinkedList<T>::remove(std::size_t position)
 {
   // TODO
-  if (position < 1 || position > itemCount) throw std::out_of_range("remove out of range");
+  if (position >= itemCount) throw std::out_of_range("remove out of range");
 
   Node<T>* toDelete = nullptr;
 
-  if (position == 1){
+  if (position == 0) {
     toDelete = headPtr;
     headPtr = headPtr->getNext();
-  }
-  else{
+  } else {
     Node<T>* prev = headPtr;
-
-    for (size_t i=1; i < position - 1; ++i)
+    for (std::size_t i = 0; i < position - 1; ++i)
       prev = prev->getNext();
-    
+
     toDelete = prev->getNext();
     prev->setNext(toDelete->getNext());
   }
-  delete toDelete;
-  --itemCount;
+
+delete toDelete;
+--itemCount;
+
 }
 
 template <typename T>
@@ -148,27 +146,21 @@ template <typename T>
 T LinkedList<T>::getEntry(std::size_t position) const
 {
   // TODO
-  if (position < 1 || position > itemCount)
-    throw std::out_of_range("getEntry position out of range");
-
+  if (position >= itemCount) throw std::out_of_range("getEntry out of range");
+  // traverse position steps
   Node<T>* cur = headPtr;
-
-  for (std::size_t i = 1; i <position; ++i)
-    cur = cur->getNext();
-
+  for (std::size_t i = 0; i < position; ++i) cur = cur->getNext();
   return cur->getItem();
+
 }
 
 template <typename T>
 void LinkedList<T>::setEntry(std::size_t position, const T &newValue)
 {
   // TODO
-  if (position < 1 || position > itemCount) throw std::out_of_range("setEntry position out of range");
-
-  Node<T>* cur = headPtr; 
-
-  for (std::size_t i = 1; i < position; ++i)
-    cur = cur->getNext();
-
+  if (position >= itemCount) throw std::out_of_range("setEntry out of range");
+  Node<T>* cur = headPtr;
+  for (std::size_t i = 0; i < position; ++i) cur = cur->getNext();
   cur->setItem(newValue);
+
 }
