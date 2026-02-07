@@ -4,12 +4,24 @@ template <typename T>
 LinkedList<T>::LinkedList()
 {
   // TODO
+  headptr = nullptr;
+  itemCount = 0;
 }
 
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
   // TODO
+  Node<T>* cur = headPtr;
+
+  while (cur != nullptr){
+    Node<T>* next = cur->getNext();
+    delete cur;
+    cur = next;
+  }
+
+  headPtr=nullptr;
+  itemCount =0;
 }
 
 template <typename T>
