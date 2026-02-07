@@ -1,6 +1,10 @@
 #ifndef _LINKED_LIST_HPP_
 #define _LINKED_LIST_HPP_
 
+#include <utility>    // std::swap
+#include <stdexcept>  // std::out_of_range
+#include <cstddef>    // std::size_t
+
 #include "AbstractList.hpp"
 #include "Node.hpp"
 
