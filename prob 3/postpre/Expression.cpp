@@ -38,7 +38,7 @@ void Expression::setFromPostfix(const std::string &post)
   postfix = post;
   //clear pre and turn post ot prefix
   prefix.clear();
-  prefixToPostfix(post, prefix);
+  postfixToPrefix(post, prefix);
 }
 
 std::string Expression::getPrefix() const
