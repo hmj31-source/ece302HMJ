@@ -75,3 +75,21 @@ TEST_CASE("Postpre: Test setFromPostfix simple", "[postpre]") {
 }
 
 /* TODO: Your test cases here */
+TEST_CASE("Prefix to Postfix", "[Expression]") {
+    Expression e;
+    e.setFromPrefix("+ab");
+    REQUIRE(e.getPrefix() == "+ab");
+    REQUIRE(e.getPostfix() == "ab+");
+}
+
+TEST_CASE("Postfix to Prefix", "[Expression]") {
+    Expression e;
+    e.setFromPostfix("ab+");
+    REQUIRE(e.getPostfix() == "ab+");
+    REQUIRE(e.getPrefix() == "+ab");
+}
+
+TEST_CASE("Invalid postfix throws", "[Expression]") {
+    Expression e;
+    REQUIRE_THROWS_AS(e.setFromPostfix("ab++"), std::invalid_argument);
+}
