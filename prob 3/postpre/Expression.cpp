@@ -12,29 +12,39 @@ Expression::Expression()
 void Expression::setFromPrefix(const std::string &pre)
 {
   // TODO: check format
+  if (!isPre(pre)){
+    throw std::invalid_argument("Invalid prefix expression");
+  }
 
   // TODO: store prefix and postfix forms
-
+  prefix = pre;
+  postfix.clear();
+  prefixToPostfix(pre, postfix);
 }
 
 void Expression::setFromPostfix(const std::string &post)
 {
   // TODO: check format
+  if(!isPost(post)){
+    throw std::invalid_argument("Invalid postfix expression");
+  }
 
   // TODO: store prefix and postfix forms
-
+  postfix = post;
+  postfix.clear();
+  prefixToPostfix(post, prefix);
 }
 
 std::string Expression::getPrefix() const
 {
     // TODO
-    return "";
+    return prefix;
 }
 
 std::string Expression::getPostfix() const
 {
     // TODO
-    return "";
+    return postfix;
 }
 
 /* Private member functions */
