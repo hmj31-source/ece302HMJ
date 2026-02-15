@@ -25,8 +25,15 @@ static void convertToLowerCase(std::string & value)
 
 bool FindPalindrome::isValidWord(const std::string &w)
 {
-
-    return false;
+	//check if the string is empty
+	if (w.empty()) return false;
+	//for length of the w string
+	for (unsigned char c : w) {
+		//check if char is n alphabet return false if not
+		if (!std::isalpha(c)) return false;
+	}
+	//retur ntrue if passes first case. 
+    return true;
 }
 
 //lower case function
