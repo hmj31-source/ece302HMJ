@@ -23,8 +23,34 @@ static void convertToLowerCase(std::string & value)
 
 //------------------- PRIVATE CLASS METHODS ------------------------------------
 
+bool FindPalindrome::isValidWord(const std::string &w)
+{
+    return false;
+}
+
+std::string FindPalindrome::toLowerCopy(const std::string &s)
+{
+    return std::string();
+}
+
+bool FindPalindrome::equalsIgnoreCase(const std::string &a, const std::string &b)
+{
+    return false;
+}
+
+std::string FindPalindrome::concatWords(const std::vector<std::string> &sentence)
+{
+    return std::string();
+}
+
+int FindPalindrome::letterCount(const std::vector<std::string> &v, int counts[26])
+{
+    return 0;
+}
+
 void FindPalindrome::recursiveFindPalindromes(std::vector<std::string>
-        candidateSentence, std::vector<std::string> remainingWords)
+                                                  candidateSentence,
+                                              std::vector<std::string> remainingWords)
 {
 	// TODO implement this recursive function!
 	return;
@@ -43,6 +69,8 @@ bool FindPalindrome::isPalindrome(std::string testString) const
 	}
 	return true;
 }
+
+
 
 //------------------- PUBLIC CLASS METHODS -------------------------------------
 

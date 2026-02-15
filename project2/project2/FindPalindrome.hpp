@@ -13,12 +13,16 @@ private:
 	//.list of all palindrone sentences
     std::vector<std::vector<std::string>> m_palSentences;
 
-	//helpers i added 
-	// helpers you add (private)
+	//helpers I added 
+	//checks whether a word is legal to add
     static bool isValidWord(const std::string& w);
+	//converts to lower case
     static std::string toLowerCopy(const std::string& s);
+	//checks if two words are the same ignoring capitalization 
     static bool equalsIgnoreCase(const std::string& a, const std::string& b);
+	//builds full sentence to test palindrome
     static std::string concatWords(const std::vector<std::string>& sentence);
+	//counts how many ties a letter apperas across all words
     static int letterCount(const std::vector<std::string>& v, int counts[26]);
 
 
