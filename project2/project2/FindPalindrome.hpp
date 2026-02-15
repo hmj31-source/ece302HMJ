@@ -8,16 +8,18 @@ class FindPalindrome{
 
 private:
 	/* Define additional private members here as needed */ 
-	//number palidromes
-	int numPalidromes;
-	//palidrone object
-	FindPalindrome* pal;
-	//capacity for array
-	int cap;
-	//array of strings
-	std::string* words;
-	//int for size;
-	int size;
+	//vector of words master list
+    std::vector<std::string> m_words;
+	//.list of all palindrone sentences
+    std::vector<std::vector<std::string>> m_palSentences;
+
+	//helpers i added 
+	// helpers you add (private)
+    static bool isValidWord(const std::string& w);
+    static std::string toLowerCopy(const std::string& s);
+    static bool equalsIgnoreCase(const std::string& a, const std::string& b);
+    static std::string concatWords(const std::vector<std::string>& sentence);
+    static int letterCount(const std::vector<std::string>& v, int counts[26]);
 
 
 	/** Find and test all possible combinations of the words that have been
