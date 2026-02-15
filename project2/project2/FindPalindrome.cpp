@@ -1,5 +1,11 @@
 #include <string>
 #include <vector>
+
+//added library t oclassify and transfomr single characters
+#include <cctype>
+//class to report errors
+#include <stdexcept>
+
 #include "FindPalindrome.hpp"
 
 //------------------- HELPER FUNCTIONS -----------------------------------------
