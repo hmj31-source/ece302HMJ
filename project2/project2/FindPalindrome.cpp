@@ -25,12 +25,19 @@ static void convertToLowerCase(std::string & value)
 
 bool FindPalindrome::isValidWord(const std::string &w)
 {
+
     return false;
 }
 
+//lower case function
 std::string FindPalindrome::toLowerCopy(const std::string &s)
 {
-    return std::string();
+	//output string defined
+	std::string out = s;
+	//for length of outstring convert to lower using cctype library
+	for (char& c: out) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+    //return the stirng
+	return out;;
 }
 
 bool FindPalindrome::equalsIgnoreCase(const std::string &a, const std::string &b)
