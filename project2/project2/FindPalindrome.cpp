@@ -42,7 +42,8 @@ std::string FindPalindrome::toLowerCopy(const std::string &s)
 
 bool FindPalindrome::equalsIgnoreCase(const std::string &a, const std::string &b)
 {
-    return false;
+	//check if the two strings are the same and return true or false
+    return toLowerCopy(a) == toLowerCopy(b);
 }
 
 std::string FindPalindrome::concatWords(const std::vector<std::string> &sentence)
