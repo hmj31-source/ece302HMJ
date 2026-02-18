@@ -55,11 +55,35 @@ bool FindPalindrome::equalsIgnoreCase(const std::string &a, const std::string &b
 
 std::string FindPalindrome::concatWords(const std::vector<std::string> &sentence)
 {
-    return std::string();
+	//string varible to return 
+	std::string s;
+	// range based over a vector for loop
+	for (const auto& w : sentence) s += w; // combine s and w
+    //return varible
+	return s;
 }
 
 int FindPalindrome::letterCount(const std::vector<std::string> &v, int counts[26])
 {
+	//intializes all letter counts to zero
+	for (int i =0; i< 26; i++) counts[i] = 0;
+	//declare total
+	int total = 0;
+	//loop thorugh loop thorugh words range over the vector
+	for (const auto& w: v){
+		//lop characters
+		for (unsigned char c: w) {
+			//lowercase normalize
+			char lc = static_cast<char>(std::tolower(c));
+			//alphabet check
+			if (lc >= 'a' && lc <= 'z'){
+				//increment at that letter
+				counts[lc - 'a']++;
+				//increase total
+				total++;
+			}
+		}
+	}
     return 0;
 }
 
