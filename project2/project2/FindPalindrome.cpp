@@ -182,29 +182,28 @@ bool FindPalindrome::cutTest2(const std::vector<std::string> & wordVector1,
                               const std::vector<std::string> & wordVector2)
 {
 	// TODO 
+	//letter count for both vectors
+	int c1[26], c2[26];
+	//lenght 2 = total count of each letter
+	int len1 = letterCount(wordVector1, c1);
+	int len2 = letterCount(wordVector2, c2);
 
-	return false;
+	//determine smaller side
+	const int* small = (len1 <= len2) ? c1 : c2;
+	const int* large = (len1 <= len2) ? c2: c1;
+	//iterate thorugh every letter
+	for (int i = 0; i < 26; i++) {
+		//check if the smaller side needs more of a letter than larger side
+		if (small[i] > large[i]) return false;
+	}
+	//return true if passes. 
+	return true;
 }
 
 bool FindPalindrome::add(const std::string & newWord)
 {
 	// TODO 
-	if (size==cap){
-		int newCap = (cap ==0) ? 1:0; cap *2;
-
-		std::string* newWords = new std::string[newCap];
-		for (int i = 0; i <size; i++){
-			newWords[i] = words[i];
-		}
-		delete[] words;
-		words = newWords;
-		cap = newCap;
-
-		words[size++] = newWord;
-		return true;
-	}
-
-	return false;
+	//check if it is a valid work
 }
 
 bool FindPalindrome::add(const std::vector<std::string> & wordVector)
