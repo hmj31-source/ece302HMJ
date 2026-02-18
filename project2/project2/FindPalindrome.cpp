@@ -204,17 +204,62 @@ bool FindPalindrome::add(const std::string & newWord)
 {
 	// TODO 
 	//check if it is a valid work
+	if (!isValidWord(newWord)) return false;
+
+	for ( const auto& w : m_words) {
+		if (equalsIgnoreCase(w, newWord)) return false;
+	}
+	m_words.push_back(newWord);
+
+	//recompute 
+	//clear plaidrome sentince array
+	m_palSentences.clear();
+	//check the cut test and if it false return true
+	if (!cutTest1(m_words)) return true;
+
+	//call recursive palindrome
+	recursiveFindPalindromes({}, m_words);
+
+	return true;
 }
+
 
 bool FindPalindrome::add(const std::vector<std::string> & wordVector)
 {
 	// TODO 
-	return false;
+	//validate all words
+	for (const auto& w: wordVector)
+		if (!isValidWord(w)) return false;
+
+	//duplicates within vector
+	for (size_t i = 0; i < wordVector.size(); i++) {
+		for (size_t j = i + 1; j < wordVector.size(); j++){
+			if (equalsIgnoreCase(wordVector[i], wordVector[j])) return false;
+		}
+	}
+
+	//duplicates vs existing
+	for (const auto& nw : wordVector){
+		for (const auto& ow : m_words){
+			if (equalsIgnoreCase(nw,ow)) return false;
+		}
+	}
+
+	//comit
+	for (const auto& w: wordVector) m_words.push_back(w);
+	//recompute
+	m_palSentences.clear();
+	if (!cutTest1(m_words)) return true;
+
+	//call recursive fucntion. 
+	recursiveFindPalindromes({}, m_words);
+	return true;
 }
 
 std::vector< std::vector<std::string> > FindPalindrome::toVector() const
 {
 	// TODO
-	return std::vector< std::vector<std::string> >();
+	//return the vector
+	return m_palSentences;
 }
 
