@@ -84,7 +84,7 @@ int FindPalindrome::letterCount(const std::vector<std::string> &v, int counts[26
 			}
 		}
 	}
-    return 0;
+    return total;
 }
 
 void FindPalindrome::recursiveFindPalindromes(std::vector<std::string>
@@ -92,7 +92,27 @@ void FindPalindrome::recursiveFindPalindromes(std::vector<std::string>
                                               std::vector<std::string> remainingWords)
 {
 	// TODO implement this recursive function!
-	return;
+	//cut test 
+
+	//base case
+	if (remainingWords.empty()) {
+		//is palindrome helper call and call concat helper
+		if (isPalindrome(concatWords(candidateSentence))) {
+			//add to palidrome sentences
+			m_palSentences.push_back(candidateSentence);
+		}
+		return;
+	}
+	//if not empty check for palindromes
+	for (size_t i =0 ; i< remainingWords.size(); i++){
+		auto nextCandidate = candidateSentence;
+		nextCandidate.push_back(remainingWords[i]);
+
+		auto nextRemaining = remainingWords;
+		nextRemaining.erase(nextRemaining.begin() + static_cast<long>(i));
+
+		recursiveFindPalindromes(nextCandidate, nextRemaining);
+	}
 }
 
 bool FindPalindrome::isPalindrome(std::string testString) const
@@ -110,55 +130,59 @@ bool FindPalindrome::isPalindrome(std::string testString) const
 }
 
 
-
 //------------------- PUBLIC CLASS METHODS -------------------------------------
 
 FindPalindrome::FindPalindrome()
 {
 	// TODO 
-	pal = new FindPalindrome();
-	cap = 0;
-	size = 0;
-	words = new std::string[cap];
-	numPalidromes = 0;
+	//vectors start empty
 }
 
 FindPalindrome::~FindPalindrome()
 {
 	// TODO 
-	delete[] pal;
-	delete[] words;
-	words = nullptr;
-	pal = nullptr;
+	//nothing to delete
 }
 
 int FindPalindrome::number() const
 {
 	// TODO 
-	return numPalidromes;
+	return static_cast<int>(m_palSentences.size());
 }
 
 void FindPalindrome::clear()
 {
 	// TODO 
-	delete[] words;
-	words = nullptr;
-	cap = 0;
-	size=0;
-	numPalidromes =0;
+	m_words.clear()
+	m_palSentences.clear()
 
 }
 
 bool FindPalindrome::cutTest1(const std::vector<std::string> & wordVector)
 {
 	// TODO 
-	return false;
+	//alphabet array
+	int counts[26];
+	//call count helper
+	letterCount(wordVector, counts);
+	//declare odd intiger
+	int odd = 0;
+	//loop over every letter
+	for (int i = 0; i < 26; i++) {
+		//check if the count can be divided by 2 evenly
+		if (counts[i] % 2!= 0) odd++; // add to odd if it has remainder
+		//if a letter is odd return false
+		if (odd > 1) return false;
+	}
+	//else return true
+	return true;
 }
 
 bool FindPalindrome::cutTest2(const std::vector<std::string> & wordVector1,
                               const std::vector<std::string> & wordVector2)
 {
 	// TODO 
+	
 	return false;
 }
 
