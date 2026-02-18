@@ -153,8 +153,8 @@ int FindPalindrome::number() const
 void FindPalindrome::clear()
 {
 	// TODO 
-	m_words.clear()
-	m_palSentences.clear()
+	m_words.clear();
+	m_palSentences.clear();
 
 }
 
@@ -182,7 +182,7 @@ bool FindPalindrome::cutTest2(const std::vector<std::string> & wordVector1,
                               const std::vector<std::string> & wordVector2)
 {
 	// TODO 
-	
+
 	return false;
 }
 
