@@ -92,7 +92,8 @@ void FindPalindrome::recursiveFindPalindromes(std::vector<std::string>
                                               std::vector<std::string> remainingWords)
 {
 	// TODO implement this recursive function!
-	//cut test 
+	//cut tests
+	if (!cutTest2(candidateSentence, remainingWords)) return;
 
 	//base case
 	if (remainingWords.empty()) {
