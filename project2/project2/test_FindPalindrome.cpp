@@ -186,3 +186,12 @@ TEST_CASE("cutTest2: insufficient letters", "[cutTest2]") {
 
     REQUIRE(fp.cutTest2(v1, v2) == false);
 }
+
+//room for checkoff
+TEST_CASE("CutTest1: checkoff"){
+    FindPalindrome fp;
+
+    std::vector<std::string> v1 = {"a","o","aa","ow"};
+
+    REQUIRE(fp.cutTest1(v1) == false);
+}
