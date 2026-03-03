@@ -72,12 +72,45 @@ template <typename T>
 void List<T>::insert(std::size_t position, const T& item)
 {
   //TODO
+  //bounds checking
+  if (position > length) {
+    throw std::out_of_range("insert position out of range");
+  }
+  //Declare new node
+  Node<T>* newNode = new Node<T>(item);
+  //if position = 0 new node next is the head and the new head is newnode
+  if (position == 0){
+    newNode->setNext(head);
+    head = newNode;
+  } else{ //if position is not 1 find the previous node 
+    Node<T?* prev = getNodeAt(position -1);
+    newNode->setNext(prev->getNext());
+    prev->setNext(newNode);
+  }
+  //increase length
+  ++length;
 }
+
 
 template <typename T>
 void List<T>::remove(std::size_t position)
 {
   //TODO
+  //bounds check
+  if (position >= length) {
+    throw std::out_of_range("remove postition out of range");
+  }
+  Node<t>* toDelete;
+  if (position == head){
+    toDelete = head;
+    head = head->getNExt();
+  } else {
+    Node<T>* prev = getNodeAt(position -1);
+    toDelete = prev->getNext();
+    prev->setNext(toDelete->getNext());
+  }
+  delete toDelete;
+  --length;
 }
 
 template <typename T>
