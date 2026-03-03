@@ -1,21 +1,28 @@
 #include "List.hpp"
 
 template <typename T>
-List<T>::List()
+List<T>::List() : head(nullptr), length(0)
 {
   //TODO
+  //declare head nullptr and length 0
 }
 
 template <typename T>
 List<T>::~List()
 {
   //TODO
+  //clear list
+  clear();
 }
 
 template <typename T>
 List<T>::List(const List<T>& x)
 {
   //TODO
+  //for length of x copy the entries to this array
+  for (std::size_t i = 0; i < x.getLength(); ++i) {
+    insert(i, x.getEntry(i));
+  }
 }
 
 template <typename T>
