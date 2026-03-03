@@ -29,6 +29,8 @@ template <typename T>
 List<T>& List<T>::operator=(List<T> x)
 {
   //TODO
+  //swap with x
+  swap(x);
   return *this;
 }
 
@@ -36,6 +38,9 @@ template <typename T>
 void List<T>::swap(List& x) 
 {
   //TODO
+  //swap each variable
+  std::swap(head, x.head);
+  std::swap(length, x.length);
 }
 
 template <typename T>
