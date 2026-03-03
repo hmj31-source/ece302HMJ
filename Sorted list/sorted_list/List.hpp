@@ -38,6 +38,7 @@ private:
   Node<T>* head;
   std::size_t length;
   
+  
   Node<T>* getNodeAt(std::size_t position) const;
 };
 
