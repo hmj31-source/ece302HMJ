@@ -100,15 +100,21 @@ void List<T>::remove(std::size_t position)
   if (position >= length) {
     throw std::out_of_range("remove postition out of range");
   }
+  //create a delete node
   Node<t>* toDelete;
+  //if the postion is the head then set to delete
   if (position == head){
     toDelete = head;
-    head = head->getNExt();
-  } else {
+    //new head is the next node
+    head = head->getNext();
+  } else { // if position isn't head
+    //find hte prevous node
     Node<T>* prev = getNodeAt(position -1);
+    //delete the next node 
     toDelete = prev->getNext();
     prev->setNext(toDelete->getNext());
   }
+  //delete and decrimant lenght
   delete toDelete;
   --length;
 }
@@ -117,17 +123,39 @@ template <typename T>
 void List<T>::clear()
 {
   //TODO
+  //run while the head is not a nullptr
+  while (head != nullptr) {
+    //set the head to delete
+    Node<T>* toDelete = head;
+    //set next as teh head
+    head = head->getNext();
+    //delete previous head
+    delete toDelete;
+  }
+  //once it finsihes length is 0
+  length = 0;
 }
 
 template <typename T>
 T List<T>::getEntry(std::size_t position) const
 {
   //TODO
-  return T();
+  //boudns check
+  if (position >= length) {
+    throw std::out_of_range("getEntry position out of range");
+  }
+  //use getNodeAt() function and get that item
+  return getNodeAt(position)->getItem();
 }
 
 template <typename T>
 void List<T>::setEntry(std::size_t position, const T& newValue)
 {
   //TODO
+  //bounds check
+  if (position >= length) {
+    throw std::out_of_range("setEntry position out of range");
+  }
+  //use getNodeAt and set the item
+  getNodeAt(position)->setItem(newValue);
 }
