@@ -142,3 +142,47 @@ TEST_CASE("cutTest2 pruning doesn't change correctness (basic sanity)", "[FindPa
     REQUIRE(b.add("ba"));
     REQUIRE(b.number() == 2);
 }
+//cuttest 1 works by checking letter can form a palidrome using counts of letters
+//test cuttest1 valid
+TEST_CASE("cutTest1: valid palindrome letters", "[cutTest1]") {
+    FindPalindrome fp;
+
+    std::vector<std::string> words = {"civic"};
+
+    REQUIRE(fp.cutTest1(words) == true);
+}
+//test cuttest1 invalid
+TEST_CASE("cutTest1: multiple odd counts", "[cutTest1]") {
+    FindPalindrome fp;
+
+    std::vector<std::string> words = {"abc"};
+
+    REQUIRE(fp.cutTest1(words) == false);
+}
+//cuttest1 multiple 
+TEST_CASE("cutTest1: multiple strings combine", "[cutTest1]") {
+    FindPalindrome fp;
+
+    std::vector<std::string> words = {"ab", "ba"};
+
+    REQUIRE(fp.cutTest1(words) == true);
+}
+//cuttest 2 fucntions by checking if the letters of 1 vector are in the other "ab" as vec 1 and "abba" as vec 2 would pass
+//cuttest 2 valid
+TEST_CASE("cutTest2: smaller fits inside larger", "[cutTest2]") {
+    FindPalindrome fp;
+
+    std::vector<std::string> v1 = {"ab"};
+    std::vector<std::string> v2 = {"abba"};
+
+    REQUIRE(fp.cutTest2(v1, v2) == true);
+}
+//cuttest 2 invalid
+TEST_CASE("cutTest2: insufficient letters", "[cutTest2]") {
+    FindPalindrome fp;
+
+    std::vector<std::string> v1 = {"aac"};
+    std::vector<std::string> v2 = {"abc"};
+
+    REQUIRE(fp.cutTest2(v1, v2) == false);
+}
