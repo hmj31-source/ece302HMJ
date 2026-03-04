@@ -16,7 +16,7 @@ List<T>::~List()
 }
 
 template <typename T>
-List<T>::List(const List<T>& x)
+List<T>::List(const List<T>& x) : head(nillptr), length(0)
 {
   //TODO
   //for length of x copy the entries to this array
@@ -62,7 +62,7 @@ template <typename T>
 Node<T>* List<T>::getNodeAt(std::size_t position) const
 {
   Node<T>* cur = head;
-  for (std::size_t i = 0; i < position; ++1) {
+  for (std::size_t i = 0; i < position; ++i) {
     cur = cur->getNext();
   }
   return cur;
@@ -83,7 +83,7 @@ void List<T>::insert(std::size_t position, const T& item)
     newNode->setNext(head);
     head = newNode;
   } else{ //if position is not 1 find the previous node 
-    Node<T?* prev = getNodeAt(position -1);
+    Node<T>* prev = getNodeAt(position -1);
     newNode->setNext(prev->getNext());
     prev->setNext(newNode);
   }
@@ -101,9 +101,9 @@ void List<T>::remove(std::size_t position)
     throw std::out_of_range("remove postition out of range");
   }
   //create a delete node
-  Node<t>* toDelete;
+  Node<T>* toDelete;
   //if the postion is the head then set to delete
-  if (position == head){
+  if (position == 0){
     toDelete = head;
     //new head is the next node
     head = head->getNext();
