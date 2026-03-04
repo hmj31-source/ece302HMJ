@@ -15,6 +15,7 @@ SortedList<T>::SortedList(List<T> unsorted_list)
   for (std::size_t i =0; i <unsorted_list.getLength(); ++1) {
     insert(unsorted_list.getEntry(i));
   }
+  
 }
 
 template <typename T>
