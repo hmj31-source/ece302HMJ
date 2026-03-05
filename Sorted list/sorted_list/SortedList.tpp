@@ -93,5 +93,11 @@ template <typename T>
 std::size_t SortedList<T>::getPosition(const T& item)
 {
   // TODO
-  return 0;
+  std::size_t len = List<T>::getLength();
+  for (std::size_t i = 0; i < len; ++i) {
+    if (List<T>::getEntry(i) == item) {
+      return i;
+    }
+  }
+  throw std::invalid_argument("getPosition: item not found");
 }
