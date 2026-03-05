@@ -15,7 +15,7 @@ SortedList<T>::SortedList(List<T> unsorted_list)
   for (std::size_t i =0; i <unsorted_list.getLength(); ++1) {
     insert(unsorted_list.getEntry(i));
   }
-  
+
 }
 
 template <typename T>
@@ -53,18 +53,28 @@ template <typename T>
 void SortedList<T>::insert(const T& item)
 {
   // TODO
+  std::size_t len = List<T>::getLength();
+  std::size_t pos = 0;
+  // Find the first position where item is <= the existing entry
+  while (pos < len && List<T>::getEntry(pos) < item) {
+    ++pos;
+  }
+  List<T>::insert(pos, item);
 }
 
 template <typename T>
 void SortedList<T>::remove(const T& item)
 {  
   // TODO
+  std::size_t pos = getPosition(item); // throws std::invalid_argument if not found
+  List<T>::remove(pos);
 }
 
 template <typename T>
 void SortedList<T>::removeAt(std::size_t position)
 {  
   // TODO
+  List<T>::remove(position); // throws std::out_of_range if invalid
 }
 
 template <typename T>
