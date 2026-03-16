@@ -72,6 +72,7 @@ namespace
 XMLParser::XMLParser()
 {
 	// TODO
+	clear();
 } 
 
 bool XMLParser::tokenizeInputString(const std::string &inputString)
