@@ -173,3 +173,96 @@ TEST_CASE("XMLParser: Test XMLParser parse, contains and frequency", "[XMLParser
 }
 
 /* Your test cases here */
+//XML tokenize test cases
+TEST_CASE("Tokenize simple XML", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE(p.tokenizeInputString("<test>hello</test>"));
+
+    std::vector<TokenStruct> tokens = p.returnTokenizedInput();
+
+    REQUIRE(tokens.size() == 3);
+
+    REQUIRE(tokens[0].tokenType == START_TAG);
+    REQUIRE(tokens[0].tokenString == "test");
+
+    REQUIRE(tokens[1].tokenType == CONTENT);
+    REQUIRE(tokens[1].tokenString == "hello");
+
+    REQUIRE(tokens[2].tokenType == END_TAG);
+    REQUIRE(tokens[2].tokenString == "test");
+}
+
+TEST_CASE("Tokenize empty tag", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE(p.tokenizeInputString("<test/>"));
+
+    auto tokens = p.returnTokenizedInput();
+
+    REQUIRE(tokens.size() == 1);
+    REQUIRE(tokens[0].tokenType == EMPTY_TAG);
+    REQUIRE(tokens[0].tokenString == "test");
+}
+
+TEST_CASE("Tokenize declaration", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE(p.tokenizeInputString("<?xml version=\"1.0\"?>"));
+
+    auto tokens = p.returnTokenizedInput();
+
+    REQUIRE(tokens.size() == 1);
+    REQUIRE(tokens[0].tokenType == DECLARATION);
+}
+
+TEST_CASE("Tokenize tag with attributes", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE(p.tokenizeInputString("<book id=\"10\">text</book>"));
+
+    auto tokens = p.returnTokenizedInput();
+
+    REQUIRE(tokens.size() == 3);
+
+    REQUIRE(tokens[0].tokenType == START_TAG);
+    REQUIRE(tokens[0].tokenString == "book");
+
+    REQUIRE(tokens[1].tokenType == CONTENT);
+    REQUIRE(tokens[1].tokenString == "text");
+
+    REQUIRE(tokens[2].tokenType == END_TAG);
+    REQUIRE(tokens[2].tokenString == "book");
+}
+
+TEST_CASE("Tokenize invalid missing >", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE_FALSE(p.tokenizeInputString("<test"));
+}
+
+TEST_CASE("Tokenize nested < inside tag", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE_FALSE(p.tokenizeInputString("<test <bad>>"));
+}
+
+TEST_CASE("Tokenize stray >", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE_FALSE(p.tokenizeInputString("hello > world"));
+}
+
+TEST_CASE("Tokenize unmatched tags but valid tokens", "[XMLParser]")
+{
+    XMLParser p;
+
+    REQUIRE(p.tokenizeInputString("<tag>hello"));
+}
