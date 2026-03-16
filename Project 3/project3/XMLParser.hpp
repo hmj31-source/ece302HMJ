@@ -27,8 +27,12 @@ private:
 	/** Vector to store the tokenized input string (token types and names) */
 	std::vector<TokenStruct> tokenizedInputVector;
   
+	//added
+	//idicates wheter tokenizeInputString() i succesful
+	bool tokenizedOK;
+	//indicates whether parseToekeizedInput() suceeded.
+	bool parsedOK;	
   // You can add or change the private fields.
-
 public:
 	/** The class constructor.
 	 * @post Creates an instance of the class that can be used to tokenize and parse an input string . */
