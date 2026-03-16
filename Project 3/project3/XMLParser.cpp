@@ -29,14 +29,14 @@ namespace
 	bool isValidNameStart(char c)
 	{
 		unsigned char uc = static_cast<unsigned char>(c);
-		return std::isalpha(uc) || c == "_" || c ==":";
+		return std::isalpha(uc) || c == '_' || c == ':';
 	}
 
 	//determines whter a char is valid anywhere in an xml tag
 	bool isValidNameChar(char c)
 	{
 		unsigned char uc = static_cast<unsigned char>(c);
-		return std::isalnum(uc) || c == "_" || c ==":" || c == "-" ||c == ".";
+		return std::isalnum(uc) || c == '_' || c == ':' || c == '-' ||c == '.';
 	}
 
 	//Checks wheter a full string is a valid XML tag name
@@ -89,9 +89,9 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 	while (i < inputString.size()) {
 		//case 1 is start of markup token
 		//all XML tags begin <
-		if (inputString[i] == "<") {
+		if (inputString[i] == '<') {
 			//find the closing >
-			size_t closePos = inputString.find(">", i +1);
+			size_t closePos = inputString.find('>', i +1);
 			//if no > return false 
 			if (closePos == std::string::npos){
 				clear();
@@ -124,7 +124,7 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			}
 			//case 1b
 			//end tag : </name>
-			else if (!inside.empty() && inside[0] == "/"){
+			else if (!inside.empty() && inside[0] == '/'){
 
 				//extract the tag name after /
 				std::string name = trim(inside .substr(1));
@@ -155,7 +155,7 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 				bool isEmpty = false;
 
 				//chekc if ends with /
-				if (!tagText.empty() && tagText.back() =="/"){
+				if (!tagText.empty() && tagText.back() =='/'){
 					isEmpty = true;
 					//remove / and trim again
 					tagText.pop_back();
@@ -191,7 +191,7 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			i = closePos +1;
 		}
 		//case 2 A > encountered outsie a tag
-		else if (inputString[i] == ">"){
+		else if (inputString[i] == '>'){
 			//stray >
 			clear();
 			return false;
@@ -210,11 +210,11 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			//extract content between current position and next tag
 			else{
 				content = inputString.substr(i,nextOpen - i);
-				i = nextOpen
+				i = nextOpen;
 			}
 
 			//reject a stray > in content
-			if (content.find(">") != std::string::npos){
+			if (content.find('>') != std::string::npos){
 				clear();
 				return false;
 			}
@@ -234,7 +234,7 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 	tokenizedOK = true;
 	//parsing has not occured
 	parsedOK = false;
-	
+
 	return true; 
 } 
 
