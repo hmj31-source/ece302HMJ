@@ -3,7 +3,7 @@
 #include "Stack.hpp"
 
 template<class ItemType>
-Stack<ItemType>::Stack() : head(nullptr), currentSize(0)
+Stack<ItemType>::Stack() : headPtr(nullptr), currentSize(0)
 {
 	// TODO
 	//declared nullptr and currentSize 0 above
@@ -64,12 +64,12 @@ bool Stack<ItemType>::pop()
 	//create new node
 	Node<ItemType>* nodeToDelete = headPtr;
 	//set headptr to next node
-	headPtr = headPtr->getNext()
+	headPtr = headPtr->getNext();
 	nodeToDelete->setNext(nullptr);
 	//delete node
 	delete nodeToDelete;
 	//decrement size
-	currentSize--
+	currentSize--;
 	//return true
 	return true;
 }
