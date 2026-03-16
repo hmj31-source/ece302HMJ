@@ -12,7 +12,7 @@ SortedList<T>::SortedList(List<T> unsorted_list)
 {
   // TODO
   //copy over each element from the unsorted list
-  for (std::size_t i =0; i <unsorted_list.getLength(); ++1) {
+  for (std::size_t i =0; i <unsorted_list.getLength(); ++i) {
     insert(unsorted_list.getEntry(i));
   }
 

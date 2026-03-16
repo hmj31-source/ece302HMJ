@@ -16,7 +16,7 @@ List<T>::~List()
 }
 
 template <typename T>
-List<T>::List(const List<T>& x) : head(nillptr), length(0)
+List<T>::List(const List<T>& x) : head(nullptr), length(0)
 {
   //TODO
   //for length of x copy the entries to this array
