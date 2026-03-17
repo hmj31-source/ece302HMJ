@@ -1,145 +1,150 @@
 #include "XMLParser.hpp"
 
-#include "XMLParser.hpp"
-
 #include <cctype>
 #include <stdexcept>
 
-//anonomys so only available in this file
+// anonymous namespace so helper functions are only visible in this file
 namespace
 {
-	//removes whitespace from front and end
+	// remove whitespace from the front and end of a string
 	std::string trim(const std::string& s)
 	{
-		//find first nonwhite space char
 		size_t start = 0;
-		while (start < s.size() && std::isspace(static_cast<unsigned char>(s[start]))) {
+		while (start < s.size() && std::isspace(static_cast<unsigned char>(s[start])))
+		{
 			start++;
 		}
-		//find last nonwhite space char
+
 		size_t end = s.size();
-		while (end > start && std::isspace(static_cast<unsigned char>(s[end-1]))) {
+		while (end > start && std::isspace(static_cast<unsigned char>(s[end - 1])))
+		{
 			end--;
 		}
-		//return teh substring between start and end
+
 		return s.substr(start, end - start);
 	}
 
-	//determines wheter a char is a valid first char of XML tag name
+	// checks whether a character is valid as the FIRST character of an XML tag name
 	bool isValidNameStart(char c)
 	{
 		unsigned char uc = static_cast<unsigned char>(c);
 		return std::isalpha(uc) || c == '_' || c == ':';
 	}
 
-	//determines whter a char is valid anywhere in an xml tag
+	// checks whether a character is valid anywhere in an XML tag name
 	bool isValidNameChar(char c)
 	{
 		unsigned char uc = static_cast<unsigned char>(c);
-		return std::isalnum(uc) || c == '_' || c == ':' || c == '-' ||c == '.';
+		return std::isalnum(uc) || c == '_' || c == ':' || c == '-' || c == '.';
 	}
 
-	//Checks wheter a full string is a valid XML tag name
+	// checks whether an entire string is a valid XML tag name
 	bool isValidTagName(const std::string& name)
 	{
-		//tag cannot be empty
-		if (name.empty()) {
+		// tag name cannot be empty
+		if (name.empty())
+		{
 			return false;
 		}
 
-		//Fist char must folloe XML strat-cahr rules
-		if (!isValidNameStart(name[0])) {
+		// first character must be valid
+		if (!isValidNameStart(name[0]))
+		{
 			return false;
 		}
-		//check every char in the tag name
-		for (char c : name) {
-			if (!isValidNameChar(c)) {
+
+		// every character must be valid
+		for (char c : name)
+		{
+			if (!isValidNameChar(c))
+			{
 				return false;
 			}
 		}
 
-		//all passed return true
 		return true;
 	}
 }
 
 XMLParser::XMLParser()
 {
-	// TODO
-	//initliaze parser by clering all internal data
+	// initialize parser by clearing all internal data
 	clear();
-} 
+}
 
 bool XMLParser::tokenizeInputString(const std::string &inputString)
 {
-	// TODO
-	//clear to start
+	// always start fresh
 	clear();
 
-	//trim and check if empty if empty fail
-	if (trim(inputString).empty()) {
-		//if empty return false
+	// if the input is all whitespace, tokenization fails
+	if (trim(inputString).empty())
+	{
 		return false;
 	}
 
-	//indec to walk through the input string
 	size_t i = 0;
 
-	//scan each char untill entire string has been proccessed
-	while (i < inputString.size()) {
-		//case 1 is start of markup token
-		//all XML tags begin <
-		if (inputString[i] == '<') {
-			//find the closing >
-			size_t closePos = inputString.find('>', i +1);
-			//if no > return false 
-			if (closePos == std::string::npos){
+	// scan through the whole input string
+	while (i < inputString.size())
+	{
+		// CASE 1: found start of markup '<'
+		if (inputString[i] == '<')
+		{
+			// find matching closing '>'
+			size_t closePos = inputString.find('>', i + 1);
+			if (closePos == std::string::npos)
+			{
 				clear();
 				return false;
 			}
 
-			//extract between < > 
-			std::string inside = inputString.substr(i+1, closePos - i - 1);
+			// get text between < and >
+			std::string inside = inputString.substr(i + 1, closePos - i - 1);
 
-			//no nested < inside a tag enclosure
-			if (inside.find('<') != std::string::npos){
+			// nested '<' inside a tag is invalid
+			if (inside.find('<') != std::string::npos)
+			{
 				clear();
 				return false;
 			}
 
 			TokenStruct token;
-			//case 1a 
-			//declaration: <?...?>
-			if (inside.size() >= 2 && inside.front() == '?' && inside.back() =='?'){
-				//remove ? and trim 
+
+			// CASE 1A: declaration <? ... ?>
+			if (inside.size() >= 2 && inside.front() == '?' && inside.back() == '?')
+			{
 				std::string declText = trim(inside.substr(1, inside.size() - 2));
-				//delcaration must contain somehting if not return false
-				if (declText.empty()){
+
+				// declaration must contain something
+				if (declText.empty())
+				{
 					clear();
 					return false;
 				}
-				
+
 				token.tokenType = DECLARATION;
 				token.tokenString = declText;
 			}
-			//case 1b
-			//end tag : </name>
-			else if (!inside.empty() && inside[0] == '/'){
 
-				//extract the tag name after /
-				std::string name = trim(inside .substr(1));
+			// CASE 1B: end tag </name>
+			else if (!inside.empty() && inside[0] == '/')
+			{
+				std::string name = trim(inside.substr(1));
 
-				//no whitespaces allowed inside end tag name
-				for ( char c: name){
-					if (std::isspace(static_cast<unsigned char>(c))){
+				// end tag name cannot contain whitespace
+				for (char c : name)
+				{
+					if (std::isspace(static_cast<unsigned char>(c)))
+					{
 						clear();
 						return false;
-	
 					}
-
 				}
-				//verify tag name follows XML rules
-				if (!isValidTagName(name)){
+
+				// end tag name must be valid
+				if (!isValidTagName(name))
+				{
 					clear();
 					return false;
 				}
@@ -147,87 +152,98 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 				token.tokenType = END_TAG;
 				token.tokenString = name;
 			}
-			//case 1c 
-			//start tag or empty tag
-			else {
+
+			// CASE 1C: start tag <name> or empty tag <name/>
+			else
+			{
+				// reject whitespace immediately after '<'
+				// example: "< tag>" should be invalid
 				if (!inside.empty() && std::isspace(static_cast<unsigned char>(inside[0])))
 				{
 					clear();
 					return false;
 				}
-				//remove leading/trailing whitespace
+
 				std::string tagText = trim(inside);
 				bool isEmpty = false;
 
-				//chekc if ends with /
-				if (!tagText.empty() && tagText.back() =='/'){
+				// check for empty tag
+				if (!tagText.empty() && tagText.back() == '/')
+				{
 					isEmpty = true;
-					//remove / and trim again
 					tagText.pop_back();
 					tagText = trim(tagText);
 				}
 
-				if (tagText.empty()){
+				if (tagText.empty())
+				{
 					clear();
 					return false;
 				}
 
-				//extrac only tag name ignore attributes
+				// extract tag name only, ignore attributes
 				size_t j = 0;
-				while (j < tagText.size() && !std::isspace(static_cast<unsigned char> (tagText[j]))){
+				while (j < tagText.size() &&
+					   !std::isspace(static_cast<unsigned char>(tagText[j])))
+				{
 					j++;
 				}
 
-				std::string name = tagText.substr(0,j);
+				std::string name = tagText.substr(0, j);
 
-				//validate tag name
-				if (!isValidTagName(name)){
+				// validate extracted tag name
+				if (!isValidTagName(name))
+				{
 					clear();
 					return false;
 				}
-				//assigne token type
+
 				token.tokenType = isEmpty ? EMPTY_TAG : START_TAG;
 				token.tokenString = name;
 			}
 
-			//save generated token
+			// save token and continue after '>'
 			tokenizedInputVector.push_back(token);
-			//continue search after closing >
-			i = closePos +1;
+			i = closePos + 1;
 		}
-		//case 2 A > encountered outsie a tag
-		else if (inputString[i] == '>'){
-			//stray >
+
+		// CASE 2: stray '>' outside a tag is invalid
+		else if (inputString[i] == '>')
+		{
 			clear();
 			return false;
 		}
-		//case 3 content between tags
-		else{
-			//find next oppening tag
-			size_t nextOpen = inputString.find('<', 1);
+
+		// CASE 3: content between tags
+		else
+		{
+			size_t nextOpen = inputString.find('<', i);
 			std::string content;
 
-			//if noe more tags exist, everthing remaining is content
-			if (nextOpen == std::string::npos){
+			// if there are no more tags, rest is content
+			if (nextOpen == std::string::npos)
+			{
 				content = inputString.substr(i);
 				i = inputString.size();
 			}
-			//extract content between current position and next tag
-			else{
-				content = inputString.substr(i,nextOpen - i);
+			else
+			{
+				// extract content up to next tag
+				content = inputString.substr(i, nextOpen - i);
 				i = nextOpen;
 			}
 
-			//reject a stray > in content
-			if (content.find('>') != std::string::npos){
+			// stray '>' inside content is invalid
+			if (content.find('>') != std::string::npos)
+			{
 				clear();
 				return false;
 			}
-			//remove witespace
-			std::string trimmedContent = trim(content);
 
-			//only store content if it isn't whitespace
-			if (!trimmedContent.empty()){
+			// ignore pure whitespace content
+			std::string trimmedContent = trim(content);
+			if (!trimmedContent.empty())
+			{
 				TokenStruct token;
 				token.tokenType = CONTENT;
 				token.tokenString = trimmedContent;
@@ -235,30 +251,141 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			}
 		}
 	}
-	//tokenization succesgull
-	tokenizedOK = true;
-	//parsing has not occured
-	parsedOK = false;
 
-	return true; 
-} 
+	// tokenization succeeded
+	tokenizedOK = true;
+	parsedOK = false;
+	return true;
+}
 
 bool XMLParser::parseTokenizedInput()
 {
-	// TODO
-	return false;
+	// cannot parse unless tokenization succeeded and tokens exist
+	if (!tokenizedOK || tokenizedInputVector.empty())
+	{
+		return false;
+	}
+
+	// start parsing fresh
+	parseStack.clear();
+	elementNameBag.clear();
+	parsedOK = false;
+
+	bool seenRoot = false;    // have we seen the root element yet?
+	bool rootClosed = false;  // has the root element finished?
+
+	for (const TokenStruct& token : tokenizedInputVector)
+	{
+		switch (token.tokenType)
+		{
+			case DECLARATION:
+				// declarations are only allowed before the root element
+				if (seenRoot || rootClosed)
+				{
+					return false;
+				}
+				break;
+
+			case CONTENT:
+				// content must be inside an open element
+				if (parseStack.isEmpty())
+				{
+					return false;
+				}
+				break;
+
+			case START_TAG:
+				// cannot start a new element after the root is already closed
+				if (rootClosed)
+				{
+					return false;
+				}
+
+				// first start tag becomes the root
+				if (!seenRoot)
+				{
+					seenRoot = true;
+				}
+				// if stack is empty here, that means we are trying to start
+				// a second top-level root element
+				else if (parseStack.isEmpty())
+				{
+					return false;
+				}
+
+				// push open tag name and store it in bag
+				parseStack.push(token.tokenString);
+				elementNameBag.add(token.tokenString);
+				break;
+
+			case EMPTY_TAG:
+				// empty tag cannot appear after root already closed
+				if (rootClosed)
+				{
+					return false;
+				}
+
+				// store element name in bag
+				elementNameBag.add(token.tokenString);
+
+				// if this is the first element, it is the root and it closes immediately
+				if (!seenRoot)
+				{
+					seenRoot = true;
+					rootClosed = true;
+				}
+				// if stack is empty and we already saw a root, this is a second top-level root
+				else if (parseStack.isEmpty())
+				{
+					return false;
+				}
+				break;
+
+			case END_TAG:
+				// cannot close a tag if nothing is open
+				if (parseStack.isEmpty())
+				{
+					return false;
+				}
+
+				// end tag must match most recent open start tag
+				if (parseStack.peek() != token.tokenString)
+				{
+					return false;
+				}
+
+				parseStack.pop();
+
+				// if stack becomes empty, the root has finished
+				if (parseStack.isEmpty())
+				{
+					rootClosed = true;
+				}
+				break;
+		}
+	}
+
+	// valid XML must have:
+	// - seen a root
+	// - root closed
+	// - no unclosed tags left
+	if (!seenRoot || !rootClosed || !parseStack.isEmpty())
+	{
+		return false;
+	}
+
+	parsedOK = true;
+	return true;
 }
 
 void XMLParser::clear()
 {
-	// TODO
-	//clear input vector
+	// clear all internal data structures
 	tokenizedInputVector.clear();
-	//clear element name bag
 	elementNameBag.clear();
-	//clear stack
 	parseStack.clear();
-	//set my private vars to false
+
+	// reset parser state flags
 	tokenizedOK = false;
 	parsedOK = false;
 }
@@ -270,20 +397,22 @@ std::vector<TokenStruct> XMLParser::returnTokenizedInput() const
 
 bool XMLParser::containsElementName(const std::string &inputString) const
 {
-	// TODO
-	//check if it parsed and tokenized okay
-	if (!tokenizedOK || !parsedOK) throw std::logic_error("XML input has not been succesfully tokenized and parsed");
+	// these functions only work after successful tokenize + parse
+	if (!tokenizedOK || !parsedOK)
+	{
+		throw std::logic_error("XML input has not been succesfully tokenized and parsed");
+	}
 
-	//returns true if the name is in the bag
 	return elementNameBag.contains(inputString);
 }
 
 int XMLParser::frequencyElementName(const std::string &inputString) const
 {
-	// TODO
-	//check if parsed and tokenized
-	if (!tokenizedOK || !parsedOK) throw std::logic_error("XML input has not been succesfully tokenized and parsed");
+	// these functions only work after successful tokenize + parse
+	if (!tokenizedOK || !parsedOK)
+	{
+		throw std::logic_error("XML input has not been succesfully tokenized and parsed");
+	}
 
 	return elementNameBag.getFrequencyOf(inputString);
 }
-
