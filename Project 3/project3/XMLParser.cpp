@@ -102,7 +102,7 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			std::string inside = inputString.substr(i+1, closePos - i - 1);
 
 			//no nested < inside a tag enclosure
-			if (inside.find("<") != std::string::npos){
+			if (inside.find('<') != std::string::npos){
 				clear();
 				return false;
 			}
