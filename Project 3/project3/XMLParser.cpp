@@ -199,7 +199,7 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 		//case 3 content between tags
 		else{
 			//find next oppening tag
-			size_t nextOpen = inputString.find("<", 1);
+			size_t nextOpen = inputString.find('<', 1);
 			std::string content;
 
 			//if noe more tags exist, everthing remaining is content
