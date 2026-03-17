@@ -130,6 +130,13 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			// CASE 1B: end tag </name>
 			else if (!inside.empty() && inside[0] == '/')
 			{
+				if (inside.find('\n') != std::string::npos ||
+					inside.find('\r') != std::string::npos ||
+					inside.find('\t') != std::string::npos)
+				{
+					clear();
+					return false;
+				}
 				std::string name = trim(inside.substr(1));
 
 				// end tag name cannot contain whitespace
@@ -157,8 +164,16 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			else
 			{
 				// reject whitespace immediately after '<'
-				// example: "< tag>" should be invalid
 				if (!inside.empty() && std::isspace(static_cast<unsigned char>(inside[0])))
+				{
+					clear();
+					return false;
+				}
+
+				// reject embedded newlines/tabs in tag markup
+				if (inside.find('\n') != std::string::npos ||
+					inside.find('\r') != std::string::npos ||
+					inside.find('\t') != std::string::npos)
 				{
 					clear();
 					return false;
