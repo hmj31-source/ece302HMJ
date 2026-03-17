@@ -266,3 +266,228 @@ TEST_CASE("Tokenize unmatched tags but valid tokens", "[XMLParser]")
 
     REQUIRE(p.tokenizeInputString("<tag>hello"));
 }
+
+//additional test cases
+
+
+//stack tests
+//empty on new stack
+TEST_CASE("Stack: isEmpty on new stack", "[Stack]")
+{
+	Stack<int> s;
+	REQUIRE(s.isEmpty());
+	REQUIRE(s.size() == 0);
+}
+
+//pop empty stack
+TEST_CASE("Stack: pop on empty stack returns false", "[Stack]")
+{
+	Stack<int> s;
+	REQUIRE_FALSE(s.pop());
+	REQUIRE(s.isEmpty());
+	REQUIRE(s.size() == 0);
+}
+
+//peek empty stack
+TEST_CASE("Stack: peek on empty stack throws", "[Stack]")
+{
+	Stack<int> s;
+	REQUIRE_THROWS_AS(s.peek(), std::logic_error);
+}
+
+//clear on stack
+TEST_CASE("Stack: clear removes all items", "[Stack]")
+{
+	Stack<int> s;
+	s.push(1);
+	s.push(2);
+	s.push(3);
+
+	REQUIRE_FALSE(s.isEmpty());
+	REQUIRE(s.size() == 3);
+
+	s.clear();
+
+	REQUIRE(s.isEmpty());
+	REQUIRE(s.size() == 0);
+	REQUIRE_FALSE(s.pop());
+	REQUIRE_THROWS_AS(s.peek(), std::logic_error);
+}
+
+//XML additional tests
+//construct on empty
+TEST_CASE("XMLParser: constructor starts empty", "[XMLParser]")
+{
+	XMLParser p;
+	std::vector<TokenStruct> tokens = p.returnTokenizedInput();
+
+	REQUIRE(tokens.empty());
+}
+
+//clear on empty
+TEST_CASE("XMLParser: clear empties token vector after tokenization", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE(p.tokenizeInputString("<a>hello</a>"));
+	REQUIRE(p.returnTokenizedInput().size() == 3);
+
+	p.clear();
+
+	REQUIRE(p.returnTokenizedInput().empty());
+}
+
+//test faild tokeization
+TEST_CASE("XMLParser: returnTokenizedInput empty after failed tokenization", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE_FALSE(p.tokenizeInputString("<bad"));
+	REQUIRE(p.returnTokenizedInput().empty());
+}
+
+//trim whitespace only input
+TEST_CASE("XMLParser: tokenizeInputString trims whitespace-only input", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE_FALSE(p.tokenizeInputString("    \n\t   "));
+	REQUIRE(p.returnTokenizedInput().empty());
+}
+
+//handeling content
+TEST_CASE("XMLParser: tokenizeInputString handles content only", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE(p.tokenizeInputString("hello world"));
+
+	std::vector<TokenStruct> tokens = p.returnTokenizedInput();
+	REQUIRE(tokens.size() == 1);
+	REQUIRE(tokens[0].tokenType == CONTENT);
+	REQUIRE(tokens[0].tokenString == "hello world");
+}
+
+TEST_CASE("XMLParser: tokenizeInputString ignores whitespace-only content between tags", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE(p.tokenizeInputString("<a>   </a>"));
+
+	std::vector<TokenStruct> tokens = p.returnTokenizedInput();
+	REQUIRE(tokens.size() == 2);
+	REQUIRE(tokens[0].tokenType == START_TAG);
+	REQUIRE(tokens[0].tokenString == "a");
+	REQUIRE(tokens[1].tokenType == END_TAG);
+	REQUIRE(tokens[1].tokenString == "a");
+}
+
+TEST_CASE("XMLParser: tokenizeInputString rejects invalid empty tag name", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE_FALSE(p.tokenizeInputString("<>"));
+	REQUIRE(p.returnTokenizedInput().empty());
+}
+
+TEST_CASE("XMLParser: tokenizeInputString rejects invalid end tag spacing", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE_FALSE(p.tokenizeInputString("<a></a b>"));
+	REQUIRE(p.returnTokenizedInput().empty());
+}
+
+TEST_CASE("XMLParser: tokenizeInputString rejects stray greater-than in content", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE_FALSE(p.tokenizeInputString("<a>hello > world</a>"));
+	REQUIRE(p.returnTokenizedInput().empty());
+}
+
+TEST_CASE("XMLParser: tokenizeInputString supports names with underscore dash colon dot", "[XMLParser]")
+{
+	XMLParser p;
+
+	REQUIRE(p.tokenizeInputString("<a_b-c.d:e></a_b-c.d:e>"));
+
+	std::vector<TokenStruct> tokens = p.returnTokenizedInput();
+	REQUIRE(tokens.size() == 2);
+	REQUIRE(tokens[0].tokenType == START_TAG);
+	REQUIRE(tokens[0].tokenString == "a_b-c.d:e");
+	REQUIRE(tokens[1].tokenType == END_TAG);
+	REQUIRE(tokens[1].tokenString == "a_b-c.d:e");
+}
+
+TEST_CASE("XMLParser: containsElementName throws before tokenize and parse", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE_THROWS_AS(p.containsElementName("a"), std::logic_error);
+}
+
+TEST_CASE("XMLParser: frequencyElementName throws before tokenize and parse", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE_THROWS_AS(p.frequencyElementName("a"), std::logic_error);
+}
+
+TEST_CASE("XMLParser: containsElementName throws after tokenize but before parse", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE(p.tokenizeInputString("<a></a>"));
+	REQUIRE_THROWS_AS(p.containsElementName("a"), std::logic_error);
+}
+
+TEST_CASE("XMLParser: frequencyElementName throws after tokenize but before parse", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE(p.tokenizeInputString("<a></a>"));
+	REQUIRE_THROWS_AS(p.frequencyElementName("a"), std::logic_error);
+}
+
+/* These next tests require parseTokenizedInput() to be implemented */
+
+TEST_CASE("XMLParser: parseTokenizedInput returns false on empty token list", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE_FALSE(p.parseTokenizedInput());
+}
+
+TEST_CASE("XMLParser: containsElementName works after valid parse", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE(p.tokenizeInputString("<root><item>one</item><item>two</item></root>"));
+	REQUIRE(p.parseTokenizedInput());
+
+	REQUIRE(p.containsElementName("root"));
+	REQUIRE(p.containsElementName("item"));
+	REQUIRE_FALSE(p.containsElementName("missing"));
+}
+
+TEST_CASE("XMLParser: frequencyElementName works after valid parse", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE(p.tokenizeInputString("<root><item>one</item><item>two</item></root>"));
+	REQUIRE(p.parseTokenizedInput());
+
+	REQUIRE(p.frequencyElementName("root") == 1);
+	REQUIRE(p.frequencyElementName("item") == 2);
+	REQUIRE(p.frequencyElementName("missing") == 0);
+}
+
+TEST_CASE("XMLParser: clear resets parser so contains and frequency throw again", "[XMLParser]")
+{
+	XMLParser p;
+	REQUIRE(p.tokenizeInputString("<root><child></child></root>"));
+	REQUIRE(p.parseTokenizedInput());
+
+	REQUIRE(p.containsElementName("root"));
+	REQUIRE(p.frequencyElementName("child") == 1);
+
+	p.clear();
+
+	REQUIRE(p.returnTokenizedInput().empty());
+	REQUIRE_THROWS_AS(p.containsElementName("root"), std::logic_error);
+	REQUIRE_THROWS_AS(p.frequencyElementName("child"), std::logic_error);
+}
