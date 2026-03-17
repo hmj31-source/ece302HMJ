@@ -247,6 +247,15 @@ bool XMLParser::parseTokenizedInput()
 void XMLParser::clear()
 {
 	// TODO
+	//clear input vector
+	tokenizedInputVector.clear();
+	//clear element name bag
+	elementNameBag.clear();
+	//clear stack
+	parseStack.clear();
+	//set my private vars to false
+	tokenizedOK = false;
+	parsedOK = false;
 }
 
 std::vector<TokenStruct> XMLParser::returnTokenizedInput() const
