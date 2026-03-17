@@ -150,6 +150,11 @@ bool XMLParser::tokenizeInputString(const std::string &inputString)
 			//case 1c 
 			//start tag or empty tag
 			else {
+				if (!inside.empty() && std::isspace(static_cast<unsigned char>(inside[0])))
+				{
+					clear();
+					return false;
+				}
 				//remove leading/trailing whitespace
 				std::string tagText = trim(inside);
 				bool isEmpty = false;
