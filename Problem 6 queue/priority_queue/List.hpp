@@ -47,5 +47,4 @@ private:
 };
 
 #include "List.tpp"
-
 #endif
