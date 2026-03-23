@@ -26,8 +26,9 @@ class ListIterator : public std::iterator<std::input_iterator_tag, T> {
     
     private:
         // TODO
+        List<T>* listptr;
+        T* itemPtr;
 };
 
 #include "ListIterator.tpp"
-
 #endif
