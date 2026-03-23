@@ -40,6 +40,9 @@ public:
 private:
 
   //TODO
+  T* data;
+  std::size_t length;
+  std::stize_t capacity;
   
 };
 
