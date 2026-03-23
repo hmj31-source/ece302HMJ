@@ -80,12 +80,12 @@ template <typename T>
 ListIterator<T> List<T>::begin() 
 {
   // TODO
-  return ListIterator<T>(nullptr, nullptr);
+  return ListIterator<T>(this, data);
 }
 
 template <typename T>
 ListIterator<T> List<T>::end() 
 {
   // TODO
-  return ListIterator<T>(nullptr, nullptr);
+  return ListIterator<T>(this, data + length);
 }
