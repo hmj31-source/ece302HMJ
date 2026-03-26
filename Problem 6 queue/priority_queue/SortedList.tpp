@@ -42,6 +42,14 @@ void SortedList<T, L>::insert(const T& item)
 {
   // TODO
   // Must use range-based for loop syntax!!
+  std::size_t position = 0;
+  for (T current : plist){
+    if (item < current) {
+      break;
+    }
+    ++position;
+  }
+  plist.insert(position, item);
 }
 
 template <typename T, typename L>
