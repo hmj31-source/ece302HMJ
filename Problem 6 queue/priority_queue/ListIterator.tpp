@@ -27,12 +27,12 @@ template <typename T>
 inline bool ListIterator<T>::operator==(const ListIterator<T> &rhs) const
 {
     // TODO
-    return false;
+    return (listptr == rhs.listptr) && (itemPtr == rhs.itemPtr);
 }
 
 template <typename T>
 inline bool ListIterator<T>::operator!=(const ListIterator<T> &rhs) const
 {
     // TODO
-    return false;
+    return !(*this == rhs);
 }
