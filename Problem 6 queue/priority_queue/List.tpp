@@ -50,6 +50,24 @@ void List<T>::swap(List<T>& x)
 }
 
 template <typename T>
+void List<T>::reserve(std::size_t newCapacity)
+{
+  //reserve space
+  if (newCapacity <= capacity) {
+    return;
+  }
+
+  T* newData = new T[newCapacity];
+  for (std::size_t i = 0; i < length; ++1) {
+    newData[i] = data[i];
+  }
+
+  delete[] data;
+  data = newData;
+  capacity = newCapacity;
+}
+
+template <typename T>
 bool List<T>::isEmpty() const noexcept
 {
   //TODO
