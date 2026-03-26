@@ -44,6 +44,7 @@ private:
   std::size_t length;
   std::size_t capacity;
   
+  void reserve(std::size_t newCapacity);
 };
 
 #include "List.tpp"
