@@ -71,14 +71,14 @@ template <typename T>
 bool List<T>::isEmpty() const noexcept
 {
   //TODO
-  return true;
+  return length == 0;
 }
 
 template <typename T>
 std::size_t List<T>::getLength() const noexcept
 {
   //TODO
-  return 0;
+  return length;
 }
 
 template <typename T>
