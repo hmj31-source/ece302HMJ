@@ -2,23 +2,25 @@
 
 /* Change the second constructor argument to Node<T>* if using a linked implementation */
 template <typename T>
-inline ListIterator<T>::ListIterator(List<T> *listPtr, T *itemPtr)
+inline ListIterator<T>::ListIterator(List<T> *listPtr, T *itemPtr) : listptr(listPtr), itemPtr(itemPtr)
 {
     // TODO
+    //done in the definition
 }
 
 template <typename T>
 inline T ListIterator<T>::operator*() const
 {
     // TODO
-    return T();
+    return *itemPtr;
 }
 
 template <typename T>
 inline ListIterator<T> ListIterator<T>::operator++()
 {
     // TODO
-    return ListIterator<T>(nullptr, nullptr);
+    ++itemPtr
+    return *this
 }
 
 template <typename T>
