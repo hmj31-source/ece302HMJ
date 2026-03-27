@@ -46,7 +46,7 @@ void List<T>::swap(List<T>& x)
   //swap all data
   std::swap(data, x.data);
   std::swap(length, x.length);
-  std::swap(capacity, x.cpacity);
+  std::swap(capacity, x.capcity);
 }
 
 template <typename T>
@@ -99,6 +99,8 @@ void List<T>::insert(std::size_t position, const T& item)
   for (std::size_t i = length; i > position; --i) {
     data[i] = data[i-1];
   }
+  data[position] = item;
+  ++length;
 }
 
 template <typename T>
