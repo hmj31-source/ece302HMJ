@@ -19,8 +19,8 @@ template <typename T>
 inline ListIterator<T> ListIterator<T>::operator++()
 {
     // TODO
-    ++itemPtr
-    return *this
+    ++itemPtr;
+    return *this;
 }
 
 template <typename T>

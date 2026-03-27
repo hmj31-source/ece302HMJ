@@ -65,7 +65,7 @@ void SortedList<T, L>::remove(const T& item)
     }
     ++position;
   }
-  throw std::invalid_argument("SortedList::remove item not found")
+  throw std::invalid_argument("SortedList::remove item not found");
 }
 
 template <typename T, typename L>
@@ -96,8 +96,8 @@ std::size_t SortedList<T, L>::getPosition(const T& newValue)
     if (current == newValue) {
       return position;
     }
-    ++position
+    ++position;
   }
 
-  throw std::invalid_argument("SortedList::getPosition item not found")
+  throw std::invalid_argument("SortedList::getPosition item not found");
 }

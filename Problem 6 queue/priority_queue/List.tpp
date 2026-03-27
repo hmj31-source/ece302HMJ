@@ -16,7 +16,7 @@ List<T>::~List()
 }
 
 template <typename T>
-List<T>::List(const List<T>& x) :data(nullptr). length(x.length), capacity(x.capacity)
+List<T>::List(const List<T>& x) :data(nullptr), length(x.length), capacity(x.capacity)
 {
   //TODO
   //bounds check
@@ -58,7 +58,7 @@ void List<T>::reserve(std::size_t newCapacity)
   }
 
   T* newData = new T[newCapacity];
-  for (std::size_t i = 0; i < length; ++1) {
+  for (std::size_t i = 0; i < length; ++i) {
     newData[i] = data[i];
   }
 
@@ -106,11 +106,11 @@ void List<T>::remove(std::size_t position)
 {
   //TODO
   //bounds check
-  if (positon >= length) {
+  if (position >= length) {
     throw std::out_of_range("List::remove position out of range");
   }
-  copy data over from the removed data
-  for (std::size_t i = position; i+ 1 < length; ++i) {
+  //copy data over from the removed data
+  for (std::size_t i = position; i + 1 < length; ++i) {
     data[i] = data[i+1];
   }
   //reduce length
@@ -122,7 +122,7 @@ void List<T>::clear()
 {
   //TODO
   //clear by setting length to 0
-  length = 0
+  length = 0;
 }
 
 template <typename T>
@@ -131,7 +131,7 @@ T List<T>::getEntry(std::size_t position) const
   //TODO
   //bounds check
   if ( position >= length)
-    throw std::out_of_range("List:getEntry position out of range")
+    throw std::out_of_range("List:getEntry position out of range");
   //return the date at the position  
   return data[position];
 }
@@ -142,7 +142,7 @@ void List<T>::setEntry(std::size_t position, const T& newValue)
   //TODO
   //bounds check
   if (position >= length)
-    throw std::out_of_range("List::setEntry positon out of range")
+    throw std::out_of_range("List::setEntry positon out of range");
 
   //set the data to the new value
   data[position] = newValue;
