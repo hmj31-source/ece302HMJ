@@ -128,17 +128,28 @@ template <typename T>
 void List<T>::clear()
 {
   //TODO
+  //clear by setting length to 0
+  length = 0;
 }
 
 template <typename T>
 T List<T>::getEntry(std::size_t position) const
 {
   //TODO
-  return T();
+  //bounds check
+  if (position >= length) throw std::out_of_range("getEntry position out of range");
+
+  //return the data at this location
+  return data[position];
 }
 
 template <typename T>
 void List<T>::setEntry(std::size_t position, const T& newValue)
 {
   //TODO
+  //bounds check a
+  if (position >= length) throw std::out_of_range("setEntry position out of range");
+
+  //insert at that position
+  data[position] = newValue;
 }
