@@ -43,12 +43,25 @@ template <typename T>
 List<T>::List(const List<T>& x)
 {
   //TODO
+  //set x variable to this lists implementation of varibles
+  capcaity = x.capacity;
+  length = x.length;
+  //new variable to copy data over
+  data = new T[capacity];
+
+  //iterate over length and copy data
+  for (std::size_t i = 0; i < length; ++i){
+    data[i] = x.data[i];
+  }
 }
 
 template <typename T>
 List<T>& List<T>::operator=(List<T> x)
 {
   //TODO
+  //assign the x to this list
+  swap(x);
+  //return this list 
   return *this;
 }
 
@@ -56,13 +69,18 @@ template <typename T>
 void List<T>::swap(List<T>& x) 
 {
   //TODO
+  //call std swap to swap all the data and variable
+  std::swap(data, x.data);
+  std::swap(length, x.length);
+  std::swap(capacity, x.capacity);
 }
 
 template <typename T>
 bool List<T>::isEmpty() const noexcept
 {
   //TODO
-  return true;
+  //if length = 0 then return 0
+  return length==0;
 }
 
 template <typename T>
