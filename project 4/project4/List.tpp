@@ -87,19 +87,41 @@ template <typename T>
 std::size_t List<T>::getLength() const noexcept
 {
   //TODO
-  return 0;
+  return length;
 }
 
 template <typename T>
 void List<T>::insert(std::size_t position, const T& item)
 {
   //TODO
+  //bounds check
+  if (position > length) throw std::out_of_range("Insert position out of range");
+
+  //resize if needed
+  if (length == capacity) resize(capacity*2);
+
+  //interate through each and move over one after the insert position
+  for (std::size_t i = length; i > position; --i){
+    data[i] = data[i-1];
+  }
+  //insert and increase length
+  data[position] = item;
+  ++length;
 }
 
 template <typename T>
 void List<T>::remove(std::size_t position)
 {
   //TODO
+  //bounds check
+  if (position >= length) throw std::out_of_range("remove position out of range");
+  
+  //iterate thorugh each to shift left 
+  for (std::size_t i = position; i + 1 < lenght; ++i){
+    data[i] = data[i+1];
+  }
+  //decraese lenght
+  --length;
 }
 
 template <typename T>
