@@ -1,15 +1,42 @@
 #include "List.hpp"
+//resize private var
+template <typename T>
+void List<T>::resize(std::size_t new_capacity)
+{
+  //declare new data list
+  T* new_data = new T[new_capacity];
+
+  //iterate over the length
+  for (std::size_t i =0; i < length; ++i) {
+    new_data[i] = data[i];
+  }
+
+  //delete old data list
+  delete[] data;
+  //set the data pointer to new_data
+  data = new_data;
+  //increase capacity
+  capacity = new_capacity;
+}
 
 template <typename T>
 List<T>::List()
 {
   //TODO
+  //set default capacity
+  capacity = 4;
+  //enpty constructor so length 0
+  lenght =0;
+  //create new list
+  data = new T[capacity];
 }
 
 template <typename T>
 List<T>::~List()
 {
   //TODO
+  //delete data
+  delete[] data;
 }
 
 template <typename T>
