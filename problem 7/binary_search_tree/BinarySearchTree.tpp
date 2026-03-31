@@ -104,12 +104,10 @@ bool BinarySearchTree<KeyType, ItemType>::insert(
     //current node parent
     Node<KeyType, ItemType>* curr_parent = nullptr;
 
-    //search 
+    //search for key
     bool found = search(key, cur, curr_parent);
     //duplicate key
-    if (found) {
-        return false;
-    }
+    if (found) return false;
 
     //new node pointer
     Node<KeyType, ItemType>* new_node = new Node<keyType, ItemType>;
@@ -164,19 +162,76 @@ bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
         return false; // empty tree
 
     // TODO
+    //current node pointer
+    Node<KeyType, ItemType>* curr = nullptr;
+    //current node parent pointer
+    Node<KeyType, ItemType>* parent = nullptr;
 
+    //search for key
+    bool found = search(key, curr, parent);
 
+    //return false if not found
+    if (!found) return false;
     // case one thing in the tree
+    if (curr == root && curr->left == nullptr && curr->right == nullptr) {
+        delete root;
+        root = nullptr;
+        return true;
+    }
 
     // case, found deleted item at leaf
+    if (curr->left == nullptr && curr->right == nullptr) {
+        if (parent->left == curr)
+            parent->left = nullptr;
+        else
+            parent->right = nulptr;
 
+        delete curr;
+        return true;
+    }
     // case, item to delete has only a right child
+    if (curr->left == nullptr && curr->right != nullptr) {
+        if (curr == root)
+            root = curr->right;
+        else if (parent->left = curr)
+            parent->left = curr->right;
+        else 
+            parent->right = curr->right;
+
+        delete curr;
+        return true;
+    }
 
     // case, item to delete has only a left child
+    if (curr->left != nullptr && curr->right == nullptr) {
+        if (curr = root)
+            root = curr->left;
+        else if (parent->left == curr)
+            parent->left = curr->left;
+        else 
+            parent->right = curr->left;
+
+        delete curr;
+        return true;
+    }
 
     // case, item to delete has two children
+    //two new node poiinters for succ and succ_parrent
+    Node<KeyType, ItemType>* succ = nullptr;
+    Node<KeyType, ItemType>* succ_parent = nullptr;
 
-    return false; 
+    inorder_successor(curr, succ, succ_parent);
+
+    curr->key = succ->key;
+    curr->data = succ->right;
+
+    if (succ_parent->left == succ)
+        succ_parent->left = succ->right;
+    else 
+        succ_parent->right = succ->right;
+
+    delete succ;
+    return true;
 }
 
 
