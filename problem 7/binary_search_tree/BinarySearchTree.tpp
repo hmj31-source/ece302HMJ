@@ -117,16 +117,16 @@ bool BinarySearchTree<KeyType, ItemType>::insert(
     new_node->right = nullptr;
 
     //check if empty tree
-    if (curr_parent == nullptr) {
+    if (root == nullptr) {
         root = new_node;
     }
-    //insert as left child
-    else if (key< curr_parent->key){
-        curr_parent->left = new_node;
+    //insert as left child attach at curr
+    else if (key< curr->key){
+        curr->left = new_node;
     }
-    //insert as right child
+    //insert as right child attach at curr
     else {
-        curr_parent->right = new_node;
+        curr->right = new_node;
     }
 
     //return succesful
