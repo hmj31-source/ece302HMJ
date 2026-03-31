@@ -99,18 +99,18 @@ bool BinarySearchTree<KeyType, ItemType>::insert(
 {
     // TODO 
     //Current node pointer
-    Node<KeyType, ItenType>* curr = nullptr;
+    Node<KeyType, ItemType>* curr = nullptr;
 
     //current node parent
     Node<KeyType, ItemType>* curr_parent = nullptr;
 
     //search for key
-    bool found = search(key, cur, curr_parent);
+    bool found = search(key, curr, curr_parent);
     //duplicate key
     if (found) return false;
 
     //new node pointer
-    Node<KeyType, ItemType>* new_node = new Node<keyType, ItemType>;
+    Node<KeyType, ItemType>* new_node = new Node<KeyType, ItemType>;
     new_node->key = key;
     new_node->data = item;
     new_node->left = nullptr;
@@ -121,8 +121,8 @@ bool BinarySearchTree<KeyType, ItemType>::insert(
         root = new_node;
     }
     //insert as left child
-    else if (key< curr_parrent->key){
-        curr_parrent->left = new_node;
+    else if (key< curr_parent->key){
+        curr_parent->left = new_node;
     }
     //insert as right child
     else {
@@ -184,7 +184,7 @@ bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
         if (parent->left == curr)
             parent->left = nullptr;
         else
-            parent->right = nulptr;
+            parent->right = nullptr;
 
         delete curr;
         return true;
@@ -193,7 +193,7 @@ bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
     if (curr->left == nullptr && curr->right != nullptr) {
         if (curr == root)
             root = curr->right;
-        else if (parent->left = curr)
+        else if (parent->left == curr)
             parent->left = curr->right;
         else 
             parent->right = curr->right;
@@ -204,7 +204,7 @@ bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
 
     // case, item to delete has only a left child
     if (curr->left != nullptr && curr->right == nullptr) {
-        if (curr = root)
+        if (curr == root)
             root = curr->left;
         else if (parent->left == curr)
             parent->left = curr->left;
@@ -223,7 +223,7 @@ bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
     inorder_successor(curr, succ, succ_parent);
 
     curr->key = succ->key;
-    curr->data = succ->right;
+    curr->data = succ->data;
 
     if (succ_parent->left == succ)
         succ_parent->left = succ->right;
