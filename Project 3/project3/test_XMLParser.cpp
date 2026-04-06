@@ -491,3 +491,69 @@ TEST_CASE("XMLParser: clear resets parser so contains and frequency throw again"
 	REQUIRE_THROWS_AS(p.containsElementName("root"), std::logic_error);
 	REQUIRE_THROWS_AS(p.frequencyElementName("child"), std::logic_error);
 }
+
+
+TEST_CASE("XMLParser: custom", "[XMLParser]")
+{
+    XMLParser p;
+    std::string testString = "<course><name>ECE302</name></course>";
+
+    REQUIRE(p.tokenizeInputString(testString));
+
+    std::vector<TokenStruct> result = {
+        TokenStruct{START_TAG, "course"},
+		TokenStruct{START_TAG, "name"},
+        TokenStruct{CONTENT, "ECE302"},
+        TokenStruct{END_TAG, "name"},
+		TokenStruct{END_TAG, "course"}
+    };
+
+    std::vector<TokenStruct> output = p.returnTokenizedInput();
+    REQUIRE(result.size() == output.size());
+
+    for (int i = 0; i < result.size(); i++)
+    {
+        REQUIRE(result[i].tokenType == output[i].tokenType);
+        REQUIRE(result[i].tokenString == output[i].tokenString);
+    }
+
+    REQUIRE(p.parseTokenizedInput());
+}
+
+TEST_CASE("XMLParser: invalid nesting", "[XMLParser]")
+{
+    XMLParser p;
+    std::string testString = "<a><b></a></b>";
+
+    REQUIRE(p.tokenizeInputString(testString));
+
+    std::vector<TokenStruct> result = {
+        TokenStruct{START_TAG, "a"},
+        TokenStruct{START_TAG, "b"},
+        TokenStruct{END_TAG, "a"},
+        TokenStruct{END_TAG, "b"}
+    };
+
+    std::vector<TokenStruct> output = p.returnTokenizedInput();
+    REQUIRE(result.size() == output.size());
+
+    for (int i = 0; i < result.size(); i++)
+    {
+        REQUIRE(result[i].tokenType == output[i].tokenType);
+        REQUIRE(result[i].tokenString == output[i].tokenString);
+    }
+
+    REQUIRE_FALSE(p.parseTokenizedInput());
+}
+
+//checkoff
+//check this <tag>hello</tag>
+
+TEST_CASE("CHECKOFF", "[XMLParser]"){
+	XMLParser p;
+	std::string testString = "<tag>hello</tag>";
+
+	REQUIRE(p.tokenizeInputString(testString));
+
+	REQUIRE(p.parseTokenizedInput());
+}
