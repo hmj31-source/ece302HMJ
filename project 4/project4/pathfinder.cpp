@@ -55,16 +55,16 @@ int main(int argc, char *argv[])
 
   for (int r = 0; r < height; ++r) {
     for (int c= 0; c < width; ++c) {
-        Pixel p = image(r, c);
+      Pixel p = image(r, c);
         
-        if ( p == RED) {
-          red_count++;
-          start = {r, c};
-        }
-        else if(p != WHITE && p != BLACK) {
-          std::cerr << "Error: invalid pixel color" << std::endl;
-          return EXIT_FAILURE;
-        }
+      if ( p == RED) {
+        red_count++;
+        start = {r, c};
+      }
+      else if(p != WHITE && p != BLACK) {
+         std::cerr << "Error: invalid pixel color" << std::endl;
+        return EXIT_FAILURE;
+      }
     }
   }
 
@@ -79,9 +79,13 @@ int main(int argc, char *argv[])
   }
 
   auto isBorder = [&](int r, int c) {
-    return r == 0 || r == height - 1 || c ==0 || c == width -1;
+    return r == 0 || r == height - 1 || c == 0 || c == width - 1;
   };
-
+  if (isBorder(start.row, start.col)) {
+    image(start.row, start.col) =GREEN;
+    std::cout << "Solution Found" << std::endl;
+  }
+  
   else{
     //bfs seutp
     Queue<State, List<State>> frontier;
