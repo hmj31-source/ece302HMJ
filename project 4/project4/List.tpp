@@ -25,8 +25,8 @@ List<T>::List()
   //TODO
   //set default capacity
   capacity = 4;
-  //enpty constructor so length 0
-  lenght =0;
+  //empty constructor so length 0
+  length = 0;
   //create new list
   data = new T[capacity];
 }
@@ -44,7 +44,7 @@ List<T>::List(const List<T>& x)
 {
   //TODO
   //set x variable to this lists implementation of varibles
-  capcaity = x.capacity;
+  capacity = x.capacity;
   length = x.length;
   //new variable to copy data over
   data = new T[capacity];
@@ -117,7 +117,7 @@ void List<T>::remove(std::size_t position)
   if (position >= length) throw std::out_of_range("remove position out of range");
   
   //iterate thorugh each to shift left 
-  for (std::size_t i = position; i + 1 < lenght; ++i){
+  for (std::size_t i = position; i + 1 < length; ++i){
     data[i] = data[i+1];
   }
   //decraese lenght

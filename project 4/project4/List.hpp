@@ -37,7 +37,7 @@ private:
 
   //TODO
   T* data;
-  std::sie_t length;
+  std::size_t length;
   std::size_t capacity;
 
   void resize(std::size_t new_capacity);
