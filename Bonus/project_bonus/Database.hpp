@@ -1,6 +1,9 @@
 #ifndef _DATABASE_H_
 #define _DATABASE_H_
 
+#include "List.hpp"
+#include "BinarySearchTree.hpp"
+
 #include <cstdlib>
 #include <string>
 
@@ -53,6 +56,15 @@ public:
 private:
 
   // TODO:
+  struct DBEntry {
+    std::string key1;
+    std::string key2;
+    T value;
+  };
+
+  List<DBEntry> entries;
+  BinarySearchTree<std::string, std::size_t> key1Tree;
+  BinarySearchTree<std::string, std::size_t> key2Tree;
 
 };
 
