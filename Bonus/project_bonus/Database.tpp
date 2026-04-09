@@ -1,20 +1,22 @@
 #include "Database.hpp"
+#include <stdexcept>
 
 template <typename T>
 Database<T>::Database() {
     // TODO
+    //leave blank
 }
 
 template <typename T>
 bool Database<T>::isEmpty() const {
     // TODO
-    return false;
+    return entries.isEmpty();
 }
 
 template <typename T>
 std::size_t Database<T>::getNumberOfEntries() const {
     // TODO
-    return 0;
+    return entries.getLength();
 }
 
 template <typename T>
