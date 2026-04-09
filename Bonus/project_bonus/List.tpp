@@ -161,4 +161,9 @@ template <typename T>
 void List<T>::setEntry(std::size_t position, const T& newValue)
 {
   //TODO
+  //bounds check
+  if (position >= itemCount) throw std::out_of_range("List setEntry position out of range");
+
+  //set position to newValue
+  items[position] = newValue;
 }
