@@ -56,20 +56,26 @@ template <typename T>
 bool List<T>::isEmpty() const noexcept
 {
   //TODO
-  return true;
+  //return wheter the itemCount is 0 or not
+  return itemCount == 0;
 }
 
 template <typename T>
 std::size_t List<T>::getLength() const noexcept
 {
   //TODO
-  return 0;
+  //return the itemcount
+  return itemCount;
 }
+
+//implement private method resize
+
 
 template <typename T>
 void List<T>::insert(std::size_t position, const T& item)
 {
   //TODO
+
 }
 
 template <typename T>
