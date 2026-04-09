@@ -36,6 +36,11 @@ public:
 private:
 
   //TODO
+  T* items;
+  std::size_t itemCount;
+  std::size_t capacity;
+
+  void resize(std::size_t newCapacity);
   
 };
 
