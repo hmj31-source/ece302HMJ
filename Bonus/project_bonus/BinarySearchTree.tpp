@@ -131,7 +131,7 @@ bool BinarySearchTree<KeyType, ItemType>::insert(
     } else {
         parent->right = newNode;
     }
-    
+
     return true;
 }
 
@@ -164,19 +164,79 @@ bool BinarySearchTree<KeyType, ItemType>::remove(KeyType key)
         return false; // empty tree
 
     // TODO
+    Node<KeyType, ItemType>* curr;
+    Node<KeyType, ItemType>* parent;
 
+    bool found = search(key, curr, parent);
+
+    //
+    if (!found) return false;
 
     // case one thing in the tree
+    if (curr==root && curr->left == nullptr && curr->right == nullptr){
+        delete root;
+        root = nullptr;
+        return true;
+    }
 
     // case, found deleted item at leaf
+    if (curr->left == nullptr && curr->right == nullptr) {
+        if (parent->left == curr) {
+            parent->left = nullptr;
+        } else{
+            parent->right = nullptr;
+        }
+        delete curr;
+        return true;
+    }
 
     // case, item to delete has only a right child
+    if (curr->left == nullptr && curr->right != nullptr) {
+        if (curr == root) {
+            root = curr->right;
+        } else if (parent->left == curr) {
+            parent->left = curr->right;
+        } else {
+            parent->right = curr->right;
+        }
+
+        delete curr;
+        return true;
+    }
 
     // case, item to delete has only a left child
+    // case, item to delete has only a right child
+    if (curr->left != nullptr && curr->right == nullptr) {
+        if (curr == root) {
+            root = curr->left;
+        }
+        else if (parent->left == curr) {
+            parent->left = curr->left;
+        }
+        else {
+            parent->right = curr->left;
+        }
+
+        delete curr;
+        return true;
+    }
 
     // case, item to delete has two children
+    Node<KeyType, ItemType>* inorder = nullptr;
+    Node<KeyType, ItemType>* inorder_parent = nullptr;
+    inorder_successor(curr, inorder, inorder_parent);
 
-    return false; 
+    curr->key = inorder->key;
+    curr->data = inorder->data;
+
+    if (inorder_parent->left == inorder) {
+        inorder_parent->left = inorder->right;
+    } else {
+        inorder_parent->right = inorder->right;
+    }
+
+    delete inorder;
+    return true; 
 }
 
 
