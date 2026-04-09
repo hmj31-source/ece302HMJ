@@ -22,7 +22,20 @@ std::size_t Database<T>::getNumberOfEntries() const {
 template <typename T>
 bool Database<T>::add(std::string key1, std::string key2, T item) {
     // TODO
-    return false;
+    if (contains(key1) || contains(key2)) return false;
+
+    DbEntry entry;
+    entry.key1 = key1;
+    entry.key2 = key2;
+    entry.value = item;
+
+    std::size_t index = entries.getLength();
+    entries.insert(index,entry);
+
+    key1Tree.insert(key1,index);
+    key2Tree.insert(key2, index);
+
+    return true;
 }
 
 template <typename T>
