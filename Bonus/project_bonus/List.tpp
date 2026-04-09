@@ -150,7 +150,11 @@ template <typename T>
 T List<T>::getEntry(std::size_t position) const
 {
   //TODO
-  return T();
+  //bounds check
+  if (position >= itemCount) throw std::out_of_range("List getEntry position out of range");
+  
+  //return item at the postion
+  return items[position];
 }
 
 template <typename T>
