@@ -107,7 +107,7 @@ bool BinarySearchTree<KeyType, ItemType>::insert(
 
     if (root == nullptr){
         root = newNode;
-        return true
+        return true;
     }
 
     Node<KeyType, ItemType>* curr = root;
