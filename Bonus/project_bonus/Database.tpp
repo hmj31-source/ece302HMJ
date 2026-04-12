@@ -75,6 +75,9 @@ bool Database<T>::remove(const std::string& key) {
 template <typename T>
 void Database<T>::clear() {
     // TODO
+    entries.clear();
+    key1Tree.destroy();
+    key2Tree.destroy();
 }
 
 template <typename T>
