@@ -83,11 +83,19 @@ void Database<T>::clear() {
 template <typename T>
 T Database<T>::getValue(const std::string& key) const {
     // TODO
-    return T();
+    std::size_t index;
+    bool found = key1Tree.retrieve(key, index);
+
+    if (!found) found = key2Tree.retreive(key, index);
+
+    if (!found) throw std::out_of_range("Key not found in database");
+    
+    return entries.getEntry(index).value;
 }
 
 template <typename T>
 bool Database<T>::contains(const std::string& key) const {
     // TODO
-    return false;
+    std::size_t index;
+    return key1Tree.retreive(key, index) || key2Tree.retreive(key, index);
 }
