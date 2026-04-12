@@ -81,7 +81,7 @@ void List<T>::resize(std::size_t newCapacity)
   //declare new items list
   T* newItems = new T[newCapacity];
   //copy the items over
-  for (std::size_t i = 0; i < itemCOunt; i++) {
+  for (std::size_t i = 0; i < itemCount; i++) {
     newItems[i] = items[i];
   }
 
@@ -110,7 +110,7 @@ void List<T>::insert(std::size_t position, const T& item)
   }
 
   //insert hte item
-  itesm[position] = item;
+  items[position] = item;
   itemCount++;
 }
 
@@ -119,17 +119,17 @@ void List<T>::remove(std::size_t position)
 {
   //TODO
   //bounds check
-  if (position >= itemCOunt) throw std::out_of_range("List remove position out of range");
+  if (position >= itemCount) throw std::out_of_range("List remove position out of range");
 
   //move items over 
-  for (std::size_t i = position; i + 1 < itemCOunt; i++) {
+  for (std::size_t i = position; i + 1 < itemCount; i++) {
     items[i] = items[i+1];
   }
   //reduce item count
   itemCount--;
 
   //reduce capacity
-  if (capcity > 4 && itemCOunt <= capcity / 4) {
+  if (capacity > 4 && itemCount <= capacity / 4) {
     resize(capacity/2);
   }
 }
