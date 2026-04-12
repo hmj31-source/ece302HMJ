@@ -194,3 +194,20 @@ TEST_CASE("TestEntry retrieval by both keys", "[entry type]") {
     REQUIRE(testdb.getValue(isbn2) == e2);
     REQUIRE(testdb.getValue(catalog_id2) == e2);
 }
+
+TEST_CASE("Remove missing key returns false", "[remove]") {
+    Database<std::string> db;
+    db.add("k1", "a1", "one");
+
+    REQUIRE_FALSE(db.remove("does_not_exist"));
+    REQUIRE(db.contains("k1"));
+    REQUIRE(db.contains("a1"));
+    REQUIRE(db.getNumberOfEntries() == 1);
+}
+
+TEST_CASE("getValue throws on missing key", "[retrieve]") {
+    Database<std::string> db;
+    db.add("k1", "a1", "one");
+
+    REQUIRE_THROWS_AS(db.getValue("missing"), std::out_of_range);
+}
