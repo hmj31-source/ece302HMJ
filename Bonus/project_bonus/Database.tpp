@@ -41,7 +41,35 @@ bool Database<T>::add(std::string key1, std::string key2, T item) {
 template <typename T>
 bool Database<T>::remove(const std::string& key) {
     // TODO
-    return false;
+    std::size_t index;
+    bool found = key1Tree.retrieve(key, index);
+
+    if (!found) found = key2Tree.retreive(key, index);
+
+    if (!found) return false;
+
+    DBEntry removedEntry entreis.getEntry(index);
+    std::size_t lastIndex = entries.getLength() - 1;
+
+    //remove keys for the entry being deleted
+    key1Tree.remove(removedEntry.key1);
+    key2Tree.remove(removedEntry.key2);
+
+    //if not removing the last item, move last into this spot
+    if (index != lastIndex) {
+        DBEntry lastEntry = entreis.getEntry(lastIndex);
+
+        entries.setEntry(index, lastEntry);
+
+        //update both trees for moved item
+        key1Tree.remove(lastEntry.key1);
+        key2Tree.remove(lastEntry.ley2);
+        key1Tree.insert(lastEntry.key1, index);
+        key2Tree.insert(lastEntry.key2, index);
+    }
+
+    entries.remove(latIndex);
+    return true;
 }
 
 template <typename T>
