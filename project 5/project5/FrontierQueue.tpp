@@ -2,10 +2,36 @@
 
 template <typename T>
 State<T> FrontierQueue<T>::pop() {
-
   //TODO: implement this the same way we implemented pop in the heap lecture. Compare states using getFCost.
+  State<T> result = queue.front();
 
-  return State<T>(T(),0,0);
+  queue[0] = queue.back();
+  queue.pop_back();
+
+  std::size_t i = 0;
+  while (!queue.empty()) {
+    std::size_t left = 2 * i +1;
+    std::size_t right = 2 * i +2;
+    std::size_t smallest = i;
+
+    if (left < queue.size() && queue[left].getFCost()) {
+      smallest = left;
+    }
+
+    if (right < queue.size() && queue[right].getFCost() < queue[smallest].getFCost()){
+      smallest = right;
+    }
+
+    if (smallest == i) {
+      break;
+    }
+
+    std::swap(queue[i], queue[smallest]);
+    i = smallest;
+  }
+
+
+  return result;
 }
 
 template <typename T>
