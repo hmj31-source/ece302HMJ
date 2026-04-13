@@ -57,3 +57,14 @@ TEST_CASE("Simple replaceif test", "[FrontierQueue]")
 
 
 /* Your test cases here */
+TEST_CASE("Heap ordering after pop is correct", "[FrontierQueue]") {
+    FrontierQueue<int> fq;
+
+    fq.push(1, 5, 5);  // f = 10
+    fq.push(2, 1, 1);  // f = 2
+    fq.push(3, 2, 2);  // f = 4
+
+    REQUIRE(fq.pop().getValue() == 2); // smallest f
+    REQUIRE(fq.pop().getValue() == 3); // next smallest
+    REQUIRE(fq.pop().getValue() == 1); // largest
+}
