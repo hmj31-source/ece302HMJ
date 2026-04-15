@@ -8,6 +8,28 @@ State<T> FrontierQueue<T>::pop() {
   queue[0] = queue.back();
   queue.pop_back();
 
+  std::size_t i = 0;
+  while (true) {
+    std::size_t left = 2*i + 1;
+    std::size_t right = 2*i + 2;
+    std::size_t smallest = i;
+
+    if (left < queue.size() &&
+        queue[left].getFCost() < queue[smallest].getFCost()) {
+      smallest = left;
+    }
+
+    if (right < queue.size() &&
+        queue[right].getFCost() < queue[smallest].getFCost()) {
+      smallest = right;
+    }
+
+    if (smallest == i) break;
+
+    std::swap(queue[i], queue[smallest]);
+    i = smallest;
+  }
+
   return result;
 }
 
