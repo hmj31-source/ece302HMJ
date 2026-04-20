@@ -53,10 +53,26 @@ bool Graph<LabelType>::remove(LabelType start, LabelType end) {
     return true;
 }
 
+template <typename LabelType>
+void dfsHelper(LabelType v, std::map<LabelType, std::set<LabelType>>& adjList, std::set<LabelType>& visited, void visit(LabelType&)) {
+    //helper for dfs
+    visited.insert(current);
+    visit(current);
+
+    or (const auto& neighbor : adjList[current]){
+        if (!visited.count(neighbor)) {
+            dfsHelper(neighbor, visited, visit);
+        }
+    }
+}
 template <typename LabelType> 
 void Graph<LabelType>::depthFirstTraversal(LabelType start, void visit(LabelType&)) {
     // BONUS
-
+    if (!adjsutList.count(start)) {
+        return;
+    }
+    std::set<LabelType> visited;
+    dfsHleper(start, visited, visit);
 }
 
 template <typename LabelType> 
