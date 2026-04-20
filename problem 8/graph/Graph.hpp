@@ -27,8 +27,7 @@ class Graph: public AbstractGraph<LabelType>
     //added private section
     private:
         //map and set
-        std::map<LabelType;
-        std::set<LabelType>> adjList;
+        std::map<LabelType, std::set<LabelType>> adjList;
         //int for edged
         int edgeCount = 0;
 };

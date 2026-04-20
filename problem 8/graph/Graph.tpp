@@ -19,11 +19,11 @@ bool Graph<LabelType>::add(LabelType start, LabelType end) {
     if (start == end) return false;
 
     //if edge already exists -> reject
-    if (adjList[start].count(end)) reutnr false;
+    if (adjList[start].count(end)) return false;
 
     //add edge both ways (undirected)
     adjList[start].insert(end);
-    adjList[end.insert(start)];
+    adjList[end].insert(start);
 
     //incremetn count
     edgeCount++;
@@ -34,18 +34,18 @@ bool Graph<LabelType>::add(LabelType start, LabelType end) {
 template <typename LabelType> 
 bool Graph<LabelType>::remove(LabelType start, LabelType end) {
     //checking validity
-    if (!adjust.count(start) || !adjust[start].count(end))
+    if (!adjList.count(start) || !adjList[start].count(end))
     return false;
 
     //remove both directions
-    adjustList[start].erase(end);
-    asjList[end].erase(start);
+    adjList[start].erase(end);
+    adjList[end].erase(start);
 
     edgeCount--;
 
     //remove isolated vertices
-    if (adjust[start].empty())
-        sdjList.erase(start);
+    if (adjList[start].empty())
+        adjList.erase(start);
 
     if (adjList[end].empty())
         adjList.erase(end);
@@ -62,10 +62,10 @@ void Graph<LabelType>::depthFirstTraversal(LabelType start, void visit(LabelType
 template <typename LabelType> 
 void Graph<LabelType>::breadthFirstTraversal(LabelType start, void visit(LabelType&)) {
     // BONUS
-    if (!adjList.count(start)) retunr;
+    if (!adjList.count(start)) return;
 
-    std::queue<LabelTye> q;
-    std::Set<LabelType> visited;
+    std::queue<LabelType> q;
+    std::set<LabelType> visited;
 
     q.push(start);
     visited.insert(start);
