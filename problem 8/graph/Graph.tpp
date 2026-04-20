@@ -22,6 +22,16 @@ bool Graph<LabelType>::add(LabelType start, LabelType end) {
     //if edge already exists -> reject
     if (adjList[start].count(end)) return false;
 
+     //prevent disconnected graph
+    if (!adjList.empty()) {
+        bool startExists = adjList.count(start);
+        bool endExists = adjList.count(end);
+
+        // if BOTH are new → disconnected → reject
+        if (!startExists && !endExists) {
+            return false;
+        }
+
     //add edge both ways (undirected)
     adjList[start].insert(end);
     adjList[end].insert(start);
