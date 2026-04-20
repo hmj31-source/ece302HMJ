@@ -29,7 +29,7 @@ class Graph: public AbstractGraph<LabelType>
         //map and set
         std::map<LabelType, std::set<LabelType>> adjList;
         //int for edged
-        int edgeCount = 0;
+        int edgeCount = 0;                    
         //dfs helper
         void dfsHelper(LabelType current, std::set<LabelType>& visited, void visit(LabelType&));
 };
