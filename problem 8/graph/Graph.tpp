@@ -16,34 +16,30 @@ int Graph<LabelType>::getNumEdges() const {
         
 template <typename LabelType> 
 bool Graph<LabelType>::add(LabelType start, LabelType end) { 
-    //check if lenght is 0
-    if (start == end) return false;
-
-    //if edge already exists -> reject
-    if (adjList[start].count(end)) return false;
-
-     //prevent disconnected graph
-    if (!adjList.empty()) {
-        bool startExists = adjList.count(start);
-        bool endExists = adjList.count(end);
-
-        // if BOTH are new → disconnected → reject
-        if (!startExists && !endExists) {
-            return false;
-        }
-
+    if (start == end) {
+        return false;
     }
-        
 
-    //add edge both ways (undirected)
+    bool startExists = adjList.count(start);
+    bool endExists = adjList.count(end);
+
+    // duplicate undirected edge
+    if (startExists && adjList[start].count(end)) {
+        return false;
+    }
+
+    // if graph already has something in it, at least one endpoint
+    // must already be in the graph, otherwise this creates a disconnected component
+    if (!adjList.empty() && !startExists && !endExists) {
+        return false;
+    }
+
     adjList[start].insert(end);
     adjList[end].insert(start);
-
-    //incremetn count
     edgeCount++;
-    return true;
 
-}   
+    return true;
+}
 
 template <typename LabelType> 
 bool Graph<LabelType>::remove(LabelType start, LabelType end) {
