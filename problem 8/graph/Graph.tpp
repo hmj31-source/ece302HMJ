@@ -1,4 +1,5 @@
 #include "Graph.hpp"
+#include <queue>
 
 template <typename LabelType>
 Graph<LabelType>::Graph() {}
