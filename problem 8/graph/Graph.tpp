@@ -32,6 +32,9 @@ bool Graph<LabelType>::add(LabelType start, LabelType end) {
             return false;
         }
 
+    }
+        
+
     //add edge both ways (undirected)
     adjList[start].insert(end);
     adjList[end].insert(start);
