@@ -5,17 +5,30 @@ Graph<LabelType>::Graph() {}
 
 template <typename LabelType> 
 int Graph<LabelType>::getNumVertices() const {
-    return 0;
+    return adjList.size();
 }
 
 template <typename LabelType> 
 int Graph<LabelType>::getNumEdges() const {
-    return 0;
+    return edgeCount;
 }
         
 template <typename LabelType> 
 bool Graph<LabelType>::add(LabelType start, LabelType end) { 
-    return false; 
+    //check if lenght is 0
+    if (start == end) return false;
+
+    //if edge already exists -> reject
+    if (adjList[start].count(end)) reutnr false;
+
+    //add edge both ways (undirected)
+    adjList[start].insert(end);
+    adjList[end.insert(start)];
+
+    //incremetn count
+    edgeCount++;
+    return true;
+
 }   
 
 template <typename LabelType> 
