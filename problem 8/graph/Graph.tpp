@@ -33,7 +33,24 @@ bool Graph<LabelType>::add(LabelType start, LabelType end) {
 
 template <typename LabelType> 
 bool Graph<LabelType>::remove(LabelType start, LabelType end) {
+    //checking validity
+    if (!adjust.count(start) || !adjust[start].count(end))
     return false;
+
+    //remove both directions
+    adjustList[start].erase(end);
+    asjList[end].erase(start);
+
+    edgeCount--;
+
+    //remove isolated vertices
+    if (adjust[start].empty())
+        sdjList.erase(start);
+
+    if (adjList[end].empty())
+        adjList.erase(end);
+
+    return true;
 }
 
 template <typename LabelType> 
