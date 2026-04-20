@@ -56,9 +56,31 @@ bool Graph<LabelType>::remove(LabelType start, LabelType end) {
 template <typename LabelType> 
 void Graph<LabelType>::depthFirstTraversal(LabelType start, void visit(LabelType&)) {
     // BONUS
+
 }
 
 template <typename LabelType> 
 void Graph<LabelType>::breadthFirstTraversal(LabelType start, void visit(LabelType&)) {
     // BONUS
+    if (!adjList.count(start)) retunr;
+
+    std::queue<LabelTye> q;
+    std::Set<LabelType> visited;
+
+    q.push(start);
+    visited.insert(start);
+
+    while(!q.empty()) {
+        LabelType current = q.front();
+        q.pop();
+
+        visit(current);
+
+        for (const auto& neighbor : adjList[current]) {
+            if (!visited.count(neighbor)) {
+                visited.insert(neighbor);
+                q.push(neighbor);
+            }
+        }
+    }
 }
