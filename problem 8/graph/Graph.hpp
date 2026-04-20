@@ -30,7 +30,7 @@ class Graph: public AbstractGraph<LabelType>
         std::map<LabelType;
         std::set<LabelType>> adjList;
         //int for edged
-        int edgeCount =0;
+        int edgeCount = 0;
 };
 
 #include "Graph.tpp"
